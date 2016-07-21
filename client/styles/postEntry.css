@@ -1,0 +1,11 @@
+#PostEntryContainer {
+  position:absolute;
+  top:40%;
+  left:50%;
+  transform:translateX(-50%);
+  background-color: white;
+  width:50%;
+  height:500px;
+  box-shadow:rgba(0, 0, 0, 0.156863) 0px 3px 10px, rgba(0, 0, 0, 0.227451) 0px 3px 10px;
+   border-radius: 1%;
+}

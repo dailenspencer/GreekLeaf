@@ -1,0 +1,79 @@
+#PostCreator {
+  position: relative;
+  left:50%;
+  top:75px;
+  transform:translateX(-50%);
+  width:50%;
+  background-color: white;
+  box-shadow:rgba(0, 0, 0, 0.156863) 0px 3px 10px, rgba(0, 0, 0, 0.227451) 0px 3px 10px;
+}
+
+#PostCreatorTop{
+
+}
+
+#PostCreatorAvatar {
+  display: inline-block;
+  vertical-align: top;
+  z-index: 100;
+}
+
+#PostCreatorInput {
+  display: inline-block;
+  vertical-align: top;
+  padding:10px 0px 0 10px;
+  box-sizing: border-box;
+  border:none;
+  font-size: 18px;
+  font-family: 'Roboto', sans-serif;
+  font-weight: 300;
+  resize: none;
+  margin-bottom: 5px;
+  overflow: hidden;
+  height:auto;
+}
+
+#PostCreatorInput:focus {
+  outline: none;
+}
+
+/*#ActionBar {
+  height: 40px;
+  bottom:0px;
+  border-top-style: solid;
+  left:10px;
+  right:10px;
+  border-width: 1px;
+  border-color: #E9EBEE;
+}
+
+#PostButton {
+  right:10px;
+  font-family: 'Roboto', sans-serif;
+  border: none;
+  background-color: #30C19E;
+  color: white;
+  top:10px;
+  width:50px;
+  height:25px;
+  border-radius: 9%;
+}
+
+
+#AttachMediaButton {
+  left:0px;
+  border: none;
+  top:10px;
+  width:25px;
+  height:25px;
+  background-color: transparent;
+}
+
+#AttachFileButton {
+  left:40px;
+  border: none;
+  top:10px;
+  width:25px;
+  height:25px;
+  background-color: transparent;
+}*/
