@@ -1,11 +1,49 @@
 #PostEntryContainer {
-  position:absolute;
-  top:40%;
-  left:50%;
-  transform:translateX(-50%);
-  background-color: white;
+  background-color: transparent;
   width:50%;
-  height:500px;
+  margin: auto;
+}
+
+#PostEntry {
+  background-color: white;
+  width:100%;
   box-shadow:rgba(0, 0, 0, 0.156863) 0px 3px 10px, rgba(0, 0, 0, 0.227451) 0px 3px 10px;
-   border-radius: 1%;
+  border-radius: 1%;
+  margin-top:10px;
+}
+
+#PostEntryAvatar {
+  display: inline-block;
+  vertical-align: top;
+  z-index: 100;
+  padding-top: 5px;
+  padding-left: 5px;
+}
+
+#PostEntryAuthor {
+  font-size: 15px;
+  font-family: 'Roboto', sans-serif;
+  display: inline-block;
+  vertical-align: top;
+  padding-top: 15px;
+  padding-left:15px;
+}
+
+#PostEntryMessage {
+  font-size: 14px;
+  font-family: 'Roboto', sans-serif;
+  padding: 15px;
+  top:0px;
+  margin:0;
+}
+
+#PostEntryTime {
+  display: inline-block;
+  vertical-align: top;
+  float: right;
+  padding-top: 5px;
+  padding-right: 10px;
+  font-size: 12px;
+  font-family: 'Roboto', sans-serif;
+  color:#818181;
 }

@@ -13,7 +13,8 @@ export default class PostEntryContainer extends React.Component {
 
     return (
       <div id="PostEntryContainer">
-        
+        <PostEntry/>
+        <PostEntry/>
       </div>
     );
 
