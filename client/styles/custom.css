@@ -2,13 +2,30 @@ body{
   background-color: #E9EBEE;
 }
 
-#PostContainer {
+/********************
+Post Board 
+*********************/
+
+#PostBoard {
 	margin-top: 100px;
 }
 
+#Loader {
+	display: inline-block;
+	vertical-align: top;
+	position: absolute;
+	width:100px;
+	height:100px;
+	right:20px;
+}
 
 
+/*********************
+Map
+*********************/
 
-
+ #map { 
+ 	height: 100%; 
+ }
 
 

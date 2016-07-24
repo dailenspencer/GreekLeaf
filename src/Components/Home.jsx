@@ -1,6 +1,7 @@
 import React from 'react';
 import Nav from './Nav';
-import PostBoard from './PostBoard/PostBoard'
+import PostBoard from './PostBoard/PostBoard';
+import PledgeTrack from './PledgeTrack/PledgeTrack';
 
 export default class Home extends React.Component {
   constructor(props){
@@ -8,6 +9,7 @@ export default class Home extends React.Component {
   	this.state = {
   		visibleComponent : <PostBoard/>
   	}
+    this.renderNewSection = this.renderNewSection.bind(this);
   }
 
   renderNewSection(section){
@@ -25,6 +27,7 @@ export default class Home extends React.Component {
   			this.setState({visibleComponent : <FoodMenu/>})
   			break;
   		case 'Pledge Track':
+        console.log('set pledge track');
   			this.setState({visibleComponent : <PledgeTrack/>})
   			break;
   		default:

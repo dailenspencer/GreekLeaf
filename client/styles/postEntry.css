@@ -17,7 +17,7 @@
   vertical-align: top;
   z-index: 100;
   padding-top: 5px;
-  padding-left: 5px;
+  padding-left: 15px;
 }
 
 #PostEntryAuthor {
@@ -33,6 +33,7 @@
   font-size: 14px;
   font-family: 'Roboto', sans-serif;
   padding: 15px;
+  padding-bottom: 0px;
   top:0px;
   margin:0;
 }
@@ -47,3 +48,72 @@
   font-family: 'Roboto', sans-serif;
   color:#818181;
 }
+
+/*********************
+Comments
+**********************/
+#CommentSection {
+  background-color: #F6F7F9;
+}
+
+#CommentEntryAvatar {
+  display:inline-block;
+  vertical-align: top;
+  padding-left: 15px;
+  padding-top: 5px;
+  padding-bottom: 2px;
+}
+
+#CommentEntryRightContent {
+  display: inline-block;
+  vertical-align: top;
+}
+
+#CommentEntryAuthor {
+  font-size: 12px;
+  font-family: 'Roboto', sans-serif;
+  padding-top: 5px;
+  padding-left: 10px;
+}
+
+#CommentEntryMessage {
+  margin-top: 0px;
+  font-size: 12px;
+  font-family: 'Roboto', sans-serif;
+  padding-left: 10px;
+}
+
+#CommentCreator {
+
+}
+
+#CommentCreatorAvatar {
+  display: inline-block;
+  vertical-align: top;
+  z-index: 100;
+  padding-top: 5px;
+  padding-left: 15px;
+}
+
+#CommentCreatorInput {
+  display: inline-block;
+  vertical-align: top;
+  padding:15px 0px 0 10px;
+  box-sizing: border-box;
+  border:none;
+  font-size: 15px;
+  font-family: 'Roboto', sans-serif;
+  font-weight: 300;
+  resize: none;
+  margin-bottom: 5px;
+  overflow: hidden;
+  height:auto;
+  right:20px;
+  width:80%;
+  background-color: transparent;
+}
+
+#CommentCreatorInput:focus {
+  outline:0;
+}
+
