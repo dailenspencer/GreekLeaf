@@ -1,7 +1,12 @@
 import React from 'react';
 import Nav from './Nav';
 import PostBoard from './PostBoard/PostBoard';
+import Messenger from './Messenger/Messenger';
+import Directory from './Directory/Directory';
+import FoodMenu from './FoodMenu/FoodMenu';
 import PledgeTrack from './PledgeTrack/PledgeTrack';
+
+
 
 export default class Home extends React.Component {
   constructor(props){
@@ -15,7 +20,7 @@ export default class Home extends React.Component {
   renderNewSection(section){
   	switch (section) {
   		case 'Home':
- 			this.setState({visibleComponent : <Postboard/>})
+ 			this.setState({visibleComponent : <PostBoard/>})
   			break;
   		case 'Messenger':
   			this.setState({visibleComponent : <Messenger/>})

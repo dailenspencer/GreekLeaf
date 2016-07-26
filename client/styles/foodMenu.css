@@ -1,0 +1,57 @@
+#DatePicker {
+	position: relative;
+	margin: auto;
+	width:50%;
+	top:100px;
+	text-align: center;
+}
+
+#FoodMenuContainer {
+	position: relative;
+	top:200px;
+	width: 100%;
+}
+
+#FoodMenuContainer h {
+	display:inline-block;
+	font-family: 'Amatic SC';
+    font-size: 58px;
+    vertical-align: top;
+
+}
+
+#FoodMenuContainer p {
+	display: inline-block;
+	font-family: 'Amatic SC';
+    font-size: 50px;
+    padding: 20px;
+}
+
+#BreakfastContainer {
+	display: inline-block;
+	vertical-align: top;
+	text-align: center;
+	width:33%;
+	height:200px;
+	
+}
+
+
+
+#LunchContainer {
+	display: inline-block;
+	text-align: center;
+	vertical-align: top;
+	width:33%;
+	height:200px;
+	
+}
+
+#DinnerContainer {
+	display: inline-block;
+	vertical-align: top;
+	text-align: center;
+	width:33%;
+	height:200px;
+	
+}

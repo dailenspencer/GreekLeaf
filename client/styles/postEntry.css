@@ -49,18 +49,30 @@
   color:#818181;
 }
 
+.Likes {
+  display: inline-block;
+  vertical-align: top;
+  padding-top: 18.5px;
+  font-size: 12px;
+  font-family: 'Roboto', sans-serif;
+}
+
 /*********************
 Comments
 **********************/
 #CommentSection {
   background-color: #F6F7F9;
+  border-top-style: solid;
+  border-width: 1px;
+  border-color: #E9EBEE;
+
 }
 
 #CommentEntryAvatar {
   display:inline-block;
   vertical-align: top;
   padding-left: 15px;
-  padding-top: 5px;
+  padding-top: 10px;
   padding-bottom: 2px;
 }
 
@@ -72,8 +84,9 @@ Comments
 #CommentEntryAuthor {
   font-size: 12px;
   font-family: 'Roboto', sans-serif;
-  padding-top: 5px;
+  padding-top: 10px;
   padding-left: 10px;
+  display: inline-block;
 }
 
 #CommentEntryMessage {

@@ -1,0 +1,34 @@
+#DirectoryContainer {
+  position: relative;
+  top:90px;
+}
+
+.DirectoryEntryRow {
+  display: flex;
+  justify-content: space-around; /*centers items on the line (the x-axis by default)*/
+  align-items: center; /*centers items on the cross-axis (y by default)*/
+}
+
+.DirectoryEntry {
+	width:200px;
+	height:200px;
+	background-color: #D56073;
+	/*background-color: #F36B6B;*/
+	/*background-color: #F79486;*/
+	background-color: #6AC1B8;
+	border-radius: 100%;
+	margin-top: 50px;
+}
+
+.InitialsHeader {
+	color:white;
+	vertical-align: center;
+	display: block;
+	line-height: 200px;
+	vertical-align: middle;
+	text-align: center;
+	height: 200px;
+	font-family: 'Roboto', sans-serif;
+  	font-weight: 300;
+  	font-size: 36px;
+}

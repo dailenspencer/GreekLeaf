@@ -49,7 +49,7 @@ export default class Nav extends React.Component {
 				<MuiThemeProvider>
 					<AppBar 
 						style={{
-							'backgroundColor': '#22A3DA',
+							'backgroundColor': '#6AC1B8',
 							'position':'fixed',
 							'top':'0px',
 							'left':'0px',
