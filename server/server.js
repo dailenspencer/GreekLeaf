@@ -1,9 +1,24 @@
+var Parse = require('parse');
+Parse.initialize("LlfYEifUnczdxWQzEgWw4kb8v7206BdAvMGkAXJP");
+Parse.serverURL = 'http://localhost:8084/parse'
+
+
+
+
 var express = require('express');
 var path = require('path');
 app = express();
 
 
+
+
 app.use(express.static('../client'));
+
+
+
+
+
+
 
 var server = app.listen(8084, function() {
 
