@@ -13,8 +13,6 @@ export default class CommentCreator extends React.Component {
   }
 
   componentDidMount(){
-    // from a jQuery collection
-    // autosize($('#PostCreatorInput'));
     var ta = document.querySelector('#CommentCreatorInput');
     ta.addEventListener('focus', function(){
         autosize(ta);

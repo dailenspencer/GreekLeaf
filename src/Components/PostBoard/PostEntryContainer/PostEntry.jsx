@@ -4,16 +4,21 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import Avatar from 'material-ui/Avatar';
 import $ from 'jquery';
 import classnames from 'classnames';
+import moment from 'moment';
 
 export default class PostEntry extends React.Component {
   constructor(props){
   	super(props);
   	this.state = {
-  	 animate: ''
+  	 animate: '',
+     likesCount: this.props.postData.likes.length
   	}
 
     this.handleHeartClick = this.handleHeartClick.bind(this);
   }
+
+  
+
 
   handleHeartClick(){
     if(this.state.animate === ''){
@@ -21,31 +26,46 @@ export default class PostEntry extends React.Component {
     } else {
       this.setState({animate:''})
     }
-    
+    this.setState({likesCount: this.state.likesCount + 1});
   }
 
-  render() {
+ 
+render() {
     let  heartClasses = classnames('heart', this.state.animate);
 
+    //POST DATA 
+    var profilePictureFile = this.props.postData.author.get("ProfilePicture");
+    var avatarUrl;
+    if(profilePictureFile){
+      avatarUrl = profilePictureFile.url();
+    } else {
+      avatarUrl = "https://avatars2.githubusercontent.com/u/8779656?v=3&s=460"
+    }
+    var name = this.props.postData.author.get("name");
+    var time = moment(new Date(this.props.postData.createdAt.toString())).fromNow();
+    var message = this.props.postData.message;
+    var likesCount = this.state.likesCount === 0 ? '' : this.state.likesCount;
+
+    
     return (
 
       <div id="PostEntry">
         <div id="PostEntryTop">
           <div id="PostEntryAvatar">
             <MuiThemeProvider>
-              <Avatar src="https://avatars2.githubusercontent.com/u/8779656?v=3&s=460" />
+              <Avatar src={avatarUrl} />
             </MuiThemeProvider>
           </div>
-          <h id="PostEntryAuthor">Dailen Spencer</h>
-          <p id="PostEntryTime">30 minutes ago</p>
+          <h id="PostEntryAuthor">{name}</h>
+          <p id="PostEntryTime">{time}</p>
         </div>
-        <p id="PostEntryMessage">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum</p>
+        <p id="PostEntryMessage">{message}</p>
         <div id="PostEntryActionBar">
           <div className={heartClasses} onClick={this.handleHeartClick}>
           </div>
-          <div className="Likes">37 likes</div>
+          <div className="Likes">{likesCount}</div>
         </div>
-        <CommentSection/>
+        <CommentSection postId={this.props.postData.id}/>
       </div>
     );
 

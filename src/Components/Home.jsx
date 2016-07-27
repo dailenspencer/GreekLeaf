@@ -9,13 +9,19 @@ import PledgeTrack from './PledgeTrack/PledgeTrack';
 
 
 export default class Home extends React.Component {
+  mixins: [ParseReact.Mixin]
   constructor(props){
   	super(props);
   	this.state = {
-  		visibleComponent : <PostBoard/>
+  		visibleComponent : <PostBoard/>,
   	}
     this.renderNewSection = this.renderNewSection.bind(this);
   }
+
+ 
+
+
+
 
   renderNewSection(section){
   	switch (section) {
@@ -43,8 +49,11 @@ export default class Home extends React.Component {
   }
 
   render() {
+
+   
+
     return (
-      <div>
+      <div style={{'height':'100%'}}>
       	<Nav renderNewSection={this.renderNewSection}/>
       	{this.state.visibleComponent}
       </div>

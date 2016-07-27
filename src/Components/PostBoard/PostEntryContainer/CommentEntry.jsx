@@ -13,8 +13,12 @@ export default class CommentEntry extends React.Component {
 
 
   render() {
+    var name = this.props.commentData.author.get("name");
+    var message = this.props.commentData.message;
+    var profilePictureFile = this.props.postData.author.get("ProfilePicture");
+    console.log(profilePictureFile);
 
-
+    
     return (
       <div id="CommentEntry">
         <div id="CommentEntryAvatar">
@@ -23,8 +27,8 @@ export default class CommentEntry extends React.Component {
           </MuiThemeProvider>
         </div>
         <div id="CommentEntryRightContent">
-           <h id="CommentEntryAuthor">Dailen Spencer</h>
-           <p id="CommentEntryMessage">Lorem ips</p>
+           <h id="CommentEntryAuthor">{name}</h>
+           <p id="CommentEntryMessage">{message}</p>
         </div>
        
         
