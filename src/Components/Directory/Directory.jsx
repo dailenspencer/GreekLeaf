@@ -1,9 +1,9 @@
 import React from 'react';
-import DirectoryEntries from './DirectoryEntries';
 import SearchBar from './SearchBar';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import {Tabs, Tab} from 'material-ui/Tabs';
 import SwipeableViews from 'react-swipeable-views';
+import {queryForNewMembers} from '../../Actions/ParseActions';
 
 const styles = {
   headline: {
@@ -24,15 +24,68 @@ export default class Directory extends React.Component {
 	constructor(props) {
 	    super(props);
 	    this.state = {
-	      slideIndex: 0,
+	      slideIndex : 0,
+	      newMemberDirectoryEntries : ''
 	    };
   	}
+
+
 
   	handleChange = (value) => {
 	    this.setState({
 	      slideIndex: value,
 	    });
   	};
+
+  	componentDidMount(){
+	    queryForNewMembers().then((resp) => {
+	      var newMemberDirectoryEntries = this.createDirectoryEntryElements(resp);
+	      this.setState({newMemberDirectoryEntries: newMemberDirectoryEntries});
+	    })
+
+  	}
+
+  	createDirectoryEntryElements(users){
+  		var directoryEntryElements = []
+  		var directoryEntryRowElements = []
+
+  		var directoryEntryRowElement = (
+			<div className="DirectoryEntryRow">
+				{directoryEntryElements}
+			</div>
+	  	)
+
+  		var counter = 0;
+  		users.forEach(function(user, index){
+  			if(counter < 4){
+  				counter++;
+  				var directoryEntryElement = (
+		  			 <div className="DirectoryEntry" key={index}>
+		          		<h className="InitialsHeader">DS</h>
+		        	</div>
+		        )
+		        directoryEntryElements.push(directoryEntryElement);
+  			}
+  			if(counter === 4){
+  				counter = 0;
+  				directoryEntryRowElements.push(directoryEntryRowElement);
+  				directoryEntryElements = [];
+  			}
+  		})
+
+  		
+  		directoryEntryRowElement = (
+  			<div className="DirectoryEntryRow">
+				{directoryEntryElements}
+			</div>
+  		)
+
+  		directoryEntryRowElements.push(directoryEntryRowElement);
+
+		return directoryEntryRowElements;
+  }
+
+
 
 	render() {
 		return (
@@ -56,16 +109,16 @@ export default class Directory extends React.Component {
 		          onChangeIndex={this.handleChange}
 		        >
 		          <div>
-		            <DirectoryEntries filter={'NewMembers'}/>
+		            {this.state.newMemberDirectoryEntries}
 		          </div>
 		          <div>
-		            <DirectoryEntries filter={'Brothers'}/>
+		            
 		          </div>
 		          <div>
-		            <DirectoryEntries filter={'ExecutiveBoard'}/>
+		            
 		          </div>
 		          <div>
-		            <DirectoryEntries filter={'HouseStaff'}/>
+		            
 		          </div>
 		        </SwipeableViews>
 
