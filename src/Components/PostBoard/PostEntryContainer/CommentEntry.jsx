@@ -15,15 +15,19 @@ export default class CommentEntry extends React.Component {
   render() {
     var name = this.props.commentData.author.get("name");
     var message = this.props.commentData.message;
-    var profilePictureFile = this.props.postData.author.get("ProfilePicture");
-    console.log(profilePictureFile);
-
+    var profilePictureFile = this.props.commentData.author.get("ProfilePicture");
+    var avatarUrl;
+    if(profilePictureFile){
+      avatarUrl = profilePictureFile.url();
+    } else {
+      avatarUrl = "https://avatars2.githubusercontent.com/u/8779656?v=3&s=460"
+    }
     
     return (
       <div id="CommentEntry">
         <div id="CommentEntryAvatar">
           <MuiThemeProvider>
-            <Avatar src="https://avatars2.githubusercontent.com/u/8779656?v=3&s=460" style={{'width':'35px','height':'35px'}} />
+            <Avatar src={avatarUrl} style={{'width':'35px','height':'35px'}} />
           </MuiThemeProvider>
         </div>
         <div id="CommentEntryRightContent">

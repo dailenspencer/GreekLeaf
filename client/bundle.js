@@ -44780,10 +44780,12 @@
 	    key: 'createCommentElements',
 	    value: function createCommentElements(comments) {
 	      var commentElements = comments.map(function (comment, index) {
+	        console.log(comment.get("Author").get("ProfilePicture"));
 	        var commentData = {
 	          author: comment.get("Author"),
 	          message: comment.get("text")
 	        };
+
 	        return _react2.default.createElement(_CommentEntry2.default, { key: index, commentData: commentData });
 	      });
 	      this.setState({ comments: commentElements });
@@ -44859,8 +44861,13 @@
 	    value: function render() {
 	      var name = this.props.commentData.author.get("name");
 	      var message = this.props.commentData.message;
-	      var profilePictureFile = this.props.postData.author.get("ProfilePicture");
-	      console.log(profilePictureFile);
+	      var profilePictureFile = this.props.commentData.author.get("ProfilePicture");
+	      var avatarUrl;
+	      if (profilePictureFile) {
+	        avatarUrl = profilePictureFile.url();
+	      } else {
+	        avatarUrl = "https://avatars2.githubusercontent.com/u/8779656?v=3&s=460";
+	      }
 
 	      return _react2.default.createElement(
 	        'div',
@@ -44871,7 +44878,7 @@
 	          _react2.default.createElement(
 	            _MuiThemeProvider2.default,
 	            null,
-	            _react2.default.createElement(_Avatar2.default, { src: 'https://avatars2.githubusercontent.com/u/8779656?v=3&s=460', style: { 'width': '35px', 'height': '35px' } })
+	            _react2.default.createElement(_Avatar2.default, { src: avatarUrl, style: { 'width': '35px', 'height': '35px' } })
 	          )
 	        ),
 	        _react2.default.createElement(

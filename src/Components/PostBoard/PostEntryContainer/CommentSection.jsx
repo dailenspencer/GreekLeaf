@@ -23,10 +23,12 @@ export default class CommentSection extends React.Component {
 
   createCommentElements(comments){
     var commentElements = comments.map(function(comment, index){
+      console.log(comment.get("Author").get("ProfilePicture"));
       var commentData = {
         author : comment.get("Author"),
         message : comment.get("text")
       }
+      
       return <CommentEntry key={index} commentData={commentData}/>
     })
     this.setState({comments: commentElements})
