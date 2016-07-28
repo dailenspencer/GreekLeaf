@@ -3,7 +3,9 @@ import SearchBar from './SearchBar';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import {Tabs, Tab} from 'material-ui/Tabs';
 import SwipeableViews from 'react-swipeable-views';
-import {queryForNewMembers} from '../../Actions/ParseActions';
+import {queryForMembers, queryForStaff} from '../../Actions/ParseActions';
+import $ from 'jquery';
+import DirectoryEntry from './DirectoryEntry';
 
 const styles = {
   headline: {
@@ -24,10 +26,17 @@ export default class Directory extends React.Component {
 	constructor(props) {
 	    super(props);
 	    this.state = {
+
 	      slideIndex : 0,
-	      newMemberDirectoryEntries : ''
+	      newMemberDirectoryEntries : '',
+	      activeMemberDirectoryEntries : '',
+	      executiveMemberDirectoryEntries : '',
+	      staffMemberDirectoryEntries : ''
 	    };
+  		this.createDirectoryEntryElements = this.createDirectoryEntryElements.bind(this)
+  		this.handleClick = this.handleClick.bind(this);
   	}
+
 
 
 
@@ -38,14 +47,27 @@ export default class Directory extends React.Component {
   	};
 
   	componentDidMount(){
-	    queryForNewMembers().then((resp) => {
+  		
+		queryForMembers("new").then((resp) => {
 	      var newMemberDirectoryEntries = this.createDirectoryEntryElements(resp);
 	      this.setState({newMemberDirectoryEntries: newMemberDirectoryEntries});
 	    })
-
+	    queryForMembers("active").then((resp) => {
+	      var activeMemberDirectoryEntries = this.createDirectoryEntryElements(resp);
+	      this.setState({activeMemberDirectoryEntries: activeMemberDirectoryEntries});
+	    })
+	    queryForMembers("executive").then((resp) => {
+	      var executiveMemberDirectoryEntries = this.createDirectoryEntryElements(resp);
+	      this.setState({executiveMemberDirectoryEntries: executiveMemberDirectoryEntries});
+	    })
+	    queryForStaff().then((resp) => {
+	    	var staffMemberDirectoryEntries = this.createDirectoryEntryElements(resp);
+	      	this.setState({staffMemberDirectoryEntries: staffMemberDirectoryEntries});
+	    })
   	}
 
   	createDirectoryEntryElements(users){
+  		
   		var directoryEntryElements = []
   		var directoryEntryRowElements = []
 
@@ -56,15 +78,10 @@ export default class Directory extends React.Component {
 	  	)
 
   		var counter = 0;
-  		users.forEach(function(user, index){
+  		users.forEach((user, index) =>{
   			if(counter < 4){
   				counter++;
-  				var directoryEntryElement = (
-		  			 <div className="DirectoryEntry" key={index}>
-		          		<h className="InitialsHeader">DS</h>
-		        	</div>
-		        )
-		        directoryEntryElements.push(directoryEntryElement);
+		        directoryEntryElements.push(<DirectoryEntry key={index} handleClick={this.handleClick} />);
   			}
   			if(counter === 4){
   				counter = 0;
@@ -85,6 +102,9 @@ export default class Directory extends React.Component {
 		return directoryEntryRowElements;
   }
 
+  	handleClick(target){
+  		target.className += " Expand"
+  	}
 
 
 	render() {
@@ -112,13 +132,13 @@ export default class Directory extends React.Component {
 		            {this.state.newMemberDirectoryEntries}
 		          </div>
 		          <div>
-		            
+		            {this.state.activeMemberDirectoryEntries}
 		          </div>
 		          <div>
-		            
+		            {this.state.executiveMemberDirectoryEntries}
 		          </div>
 		          <div>
-		            
+		            {this.state.staffMemberDirectoryEntries}
 		          </div>
 		        </SwipeableViews>
 

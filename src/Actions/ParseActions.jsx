@@ -41,11 +41,25 @@ export function queryForComments(PostID){
 /******************************************
 Directory Query Actions
 ******************************************/
-export function queryForNewMembers(){
-  var NewMembers = Parse.Object.extend("User")
-  var query = new Parse.Query(NewMembers).ascending("name");
+export function queryForMembers(memberStatus){
+  var members = Parse.Object.extend("User")
+  var query = new Parse.Query(members).ascending("name");
   query.equalTo("universityExtension", "Test Group")
-  query.equalTo("memberStatus","new");
+  query.equalTo("memberStatus",memberStatus);
+  return query.find({
+    success: function(results){
+      return results
+    },
+    error: function(error){
+      alert("Error:" + error.code + " " + error.message);
+    }
+  })
+}
+
+export function queryForStaff(){
+  var members = Parse.Object.extend("Staff")
+  var query = new Parse.Query(members).ascending("type");
+  query.equalTo("universityExtension", "Test Group")
   return query.find({
     success: function(results){
       return results

@@ -55359,7 +55359,8 @@
 	});
 	exports.queryPosts = queryPosts;
 	exports.queryForComments = queryForComments;
-	exports.queryForNewMembers = queryForNewMembers;
+	exports.queryForMembers = queryForMembers;
+	exports.queryForStaff = queryForStaff;
 
 	var _parse = __webpack_require__(483);
 
@@ -55408,17 +55409,31 @@
 	/******************************************
 	Directory Query Actions
 	******************************************/
-	function queryForNewMembers() {
-	  var NewMembers = _parse2.default.Object.extend("User");
-	  var query = new _parse2.default.Query(NewMembers).ascending("name");
+	function queryForMembers(memberStatus) {
+	  var members = _parse2.default.Object.extend("User");
+	  var query = new _parse2.default.Query(members).ascending("name");
 	  query.equalTo("universityExtension", "Test Group");
-	  query.equalTo("memberStatus", "new");
+	  query.equalTo("memberStatus", memberStatus);
 	  return query.find({
 	    success: function success(results) {
 	      return results;
 	    },
 	    error: function error(_error3) {
 	      alert("Error:" + _error3.code + " " + _error3.message);
+	    }
+	  });
+	}
+
+	function queryForStaff() {
+	  var members = _parse2.default.Object.extend("Staff");
+	  var query = new _parse2.default.Query(members).ascending("type");
+	  query.equalTo("universityExtension", "Test Group");
+	  return query.find({
+	    success: function success(results) {
+	      return results;
+	    },
+	    error: function error(_error4) {
+	      alert("Error:" + _error4.code + " " + _error4.message);
 	    }
 	  });
 	}
@@ -86877,6 +86892,14 @@
 
 	var _ParseActions = __webpack_require__(482);
 
+	var _jquery = __webpack_require__(479);
+
+	var _jquery2 = _interopRequireDefault(_jquery);
+
+	var _DirectoryEntry = __webpack_require__(821);
+
+	var _DirectoryEntry2 = _interopRequireDefault(_DirectoryEntry);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -86912,9 +86935,15 @@
 			};
 
 			_this.state = {
+
 				slideIndex: 0,
-				newMemberDirectoryEntries: ''
+				newMemberDirectoryEntries: '',
+				activeMemberDirectoryEntries: '',
+				executiveMemberDirectoryEntries: '',
+				staffMemberDirectoryEntries: ''
 			};
+			_this.createDirectoryEntryElements = _this.createDirectoryEntryElements.bind(_this);
+			_this.handleClick = _this.handleClick.bind(_this);
 			return _this;
 		}
 
@@ -86923,14 +86952,28 @@
 			value: function componentDidMount() {
 				var _this2 = this;
 
-				(0, _ParseActions.queryForNewMembers)().then(function (resp) {
+				(0, _ParseActions.queryForMembers)("new").then(function (resp) {
 					var newMemberDirectoryEntries = _this2.createDirectoryEntryElements(resp);
 					_this2.setState({ newMemberDirectoryEntries: newMemberDirectoryEntries });
+				});
+				(0, _ParseActions.queryForMembers)("active").then(function (resp) {
+					var activeMemberDirectoryEntries = _this2.createDirectoryEntryElements(resp);
+					_this2.setState({ activeMemberDirectoryEntries: activeMemberDirectoryEntries });
+				});
+				(0, _ParseActions.queryForMembers)("executive").then(function (resp) {
+					var executiveMemberDirectoryEntries = _this2.createDirectoryEntryElements(resp);
+					_this2.setState({ executiveMemberDirectoryEntries: executiveMemberDirectoryEntries });
+				});
+				(0, _ParseActions.queryForStaff)().then(function (resp) {
+					var staffMemberDirectoryEntries = _this2.createDirectoryEntryElements(resp);
+					_this2.setState({ staffMemberDirectoryEntries: staffMemberDirectoryEntries });
 				});
 			}
 		}, {
 			key: 'createDirectoryEntryElements',
 			value: function createDirectoryEntryElements(users) {
+				var _this3 = this;
+
 				var directoryEntryElements = [];
 				var directoryEntryRowElements = [];
 
@@ -86944,16 +86987,7 @@
 				users.forEach(function (user, index) {
 					if (counter < 4) {
 						counter++;
-						var directoryEntryElement = _react2.default.createElement(
-							'div',
-							{ className: 'DirectoryEntry', key: index },
-							_react2.default.createElement(
-								'h',
-								{ className: 'InitialsHeader' },
-								'DS'
-							)
-						);
-						directoryEntryElements.push(directoryEntryElement);
+						directoryEntryElements.push(_react2.default.createElement(_DirectoryEntry2.default, { key: index, handleClick: _this3.handleClick }));
 					}
 					if (counter === 4) {
 						counter = 0;
@@ -86971,6 +87005,11 @@
 				directoryEntryRowElements.push(directoryEntryRowElement);
 
 				return directoryEntryRowElements;
+			}
+		}, {
+			key: 'handleClick',
+			value: function handleClick(target) {
+				target.className += " Expand";
 			}
 		}, {
 			key: 'render',
@@ -87009,9 +87048,21 @@
 							null,
 							this.state.newMemberDirectoryEntries
 						),
-						_react2.default.createElement('div', null),
-						_react2.default.createElement('div', null),
-						_react2.default.createElement('div', null)
+						_react2.default.createElement(
+							'div',
+							null,
+							this.state.activeMemberDirectoryEntries
+						),
+						_react2.default.createElement(
+							'div',
+							null,
+							this.state.executiveMemberDirectoryEntries
+						),
+						_react2.default.createElement(
+							'div',
+							null,
+							this.state.staffMemberDirectoryEntries
+						)
 					)
 				);
 			}
@@ -95988,6 +96039,76 @@
 	  onRightClick: 'rightclick'
 	};
 	module.exports = exports['default'];
+
+/***/ },
+/* 820 */,
+/* 821 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(2);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var DirectoryEntry = function (_Component) {
+		_inherits(DirectoryEntry, _Component);
+
+		function DirectoryEntry() {
+			_classCallCheck(this, DirectoryEntry);
+
+			return _possibleConstructorReturn(this, Object.getPrototypeOf(DirectoryEntry).apply(this, arguments));
+		}
+
+		_createClass(DirectoryEntry, [{
+			key: 'refClick',
+			value: function refClick() {
+				console.log('refClick fired in DirectoryEntry');
+				console.log('this.directoryEntry is ' + this.directoryEntry);
+				this.props.handleClick(this.directoryEntry);
+			}
+		}, {
+			key: 'render',
+			value: function render() {
+				var _this2 = this;
+
+				return _react2.default.createElement(
+					'div',
+					{
+						ref: function ref(_ref) {
+							return _this2.directoryEntry = _ref;
+						},
+						className: 'DirectoryEntry',
+						onClick: function onClick() {
+							return _this2.refClick();
+						} },
+					_react2.default.createElement(
+						'h',
+						{ className: 'InitialsHeader' },
+						'DS'
+					)
+				);
+			}
+		}]);
+
+		return DirectoryEntry;
+	}(_react.Component);
+
+	exports.default = DirectoryEntry;
 
 /***/ }
 /******/ ]);
