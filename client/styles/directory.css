@@ -1,20 +1,30 @@
 #DirectoryContainer {
   position: relative;
   top:90px;
+  overflow-y: scroll;
+
 }
 
-.DirectoryEntryRow {
-  display: flex;
-  justify-content: space-around; 
-  align-items: center; 
+.DirectoryEntriesContainer {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	justify-content: space-around;
 }
 
 .DirectoryEntry {
+	
+	cursor: pointer;
+	flex-basis: 25%;
+}
+
+.DirectoryEntryCircle {
 	width:200px;
 	height:200px;
 	background-color: #D56073;
 	background-color: #6AC1B8;
 	border-radius: 100%;
+	margin: 0 auto;
 	margin-top: 50px;
 }
 
@@ -31,7 +41,28 @@
   	font-size: 36px;
 }
 
-.Expand {
-	border-radius: 0%;
-	background-color: black;
+.fullNameHeader {
+	color:white;
+	vertical-align: center;
+	display: block;
+	line-height: 200px;
+	vertical-align: middle;
+	text-align: center;
+	height: 200px;
+	font-family: 'Roboto', sans-serif;
+  	font-weight: 300;
+  	font-size: 28px;
 }
+
+/*
+#ProfilePopUp {
+	position: fixed;
+	background-color: black;
+	opacity: 0.8;
+	top:50%;
+	left:50%;
+	transform: translateX(-50%) translateY(-50%);
+	width: 500px;
+	height: 500px;
+	border-radius: 2%;
+}*/

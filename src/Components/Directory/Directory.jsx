@@ -7,6 +7,7 @@ import {queryForMembers, queryForStaff} from '../../Actions/ParseActions';
 import $ from 'jquery';
 import DirectoryEntry from './DirectoryEntry';
 
+
 const styles = {
   headline: {
     fontSize: 24,
@@ -69,41 +70,15 @@ export default class Directory extends React.Component {
   	createDirectoryEntryElements(users){
   		
   		var directoryEntryElements = []
-  		var directoryEntryRowElements = []
 
-  		var directoryEntryRowElement = (
-			<div className="DirectoryEntryRow">
-				{directoryEntryElements}
-			</div>
-	  	)
-
-  		var counter = 0;
-  		users.forEach((user, index) =>{
-  			if(counter < 4){
-  				counter++;
-		        directoryEntryElements.push(<DirectoryEntry key={index} handleClick={this.handleClick} />);
-  			}
-  			if(counter === 4){
-  				counter = 0;
-  				directoryEntryRowElements.push(directoryEntryRowElement);
-  				directoryEntryElements = [];
-  			}
-  		})
-
-  		
-  		directoryEntryRowElement = (
-  			<div className="DirectoryEntryRow">
-				{directoryEntryElements}
-			</div>
-  		)
-
-  		directoryEntryRowElements.push(directoryEntryRowElement);
-
-		return directoryEntryRowElements;
+		users.forEach((user, index) =>{
+  			directoryEntryElements.push(<DirectoryEntry key={index} handleClick={this.handleClick} user={user}/>);
+		})
+		return directoryEntryElements;
   }
 
   	handleClick(target){
-  		target.className += " Expand"
+  		console.log('handle click');
   	}
 
 
@@ -128,21 +103,19 @@ export default class Directory extends React.Component {
 		          index={this.state.slideIndex}
 		          onChangeIndex={this.handleChange}
 		        >
-		          <div>
+		          <div className="DirectoryEntriesContainer">
 		            {this.state.newMemberDirectoryEntries}
 		          </div>
-		          <div>
+		          <div className="DirectoryEntriesContainer">
 		            {this.state.activeMemberDirectoryEntries}
 		          </div>
-		          <div>
+		          <div className="DirectoryEntriesContainer">
 		            {this.state.executiveMemberDirectoryEntries}
 		          </div>
-		          <div>
+		          <div className="DirectoryEntriesContainer">
 		            {this.state.staffMemberDirectoryEntries}
 		          </div>
 		        </SwipeableViews>
-
-
 			</div>
 		);
 	}
