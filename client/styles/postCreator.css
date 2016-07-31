@@ -1,6 +1,6 @@
 #PostCreator {
   position: relative;
-  width:50%;
+  width:60%;
   background-color: white;
   box-shadow:rgba(0, 0, 0, 0.156863) 0px 3px 10px, rgba(0, 0, 0, 0.227451) 0px 3px 10px;
   margin: auto;
@@ -53,7 +53,7 @@
   right:10px;
   font-family: 'Roboto', sans-serif;
   border: none;
-  background-color: #6AC1B8;
+  background-color: #028BF4;
   color: white;
   top:10px;
   width:50px;

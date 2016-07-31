@@ -7,8 +7,12 @@ import IconMenu from 'material-ui/IconMenu';
 import MenuItem from 'material-ui/MenuItem';
 import IconButton from 'material-ui/IconButton/IconButton';
 import MenuIcon from 'material-ui/svg-icons/navigation/menu';
+import DownArrowIcon from 'material-ui/svg-icons/hardware/keyboard-arrow-down';
 import Avatar from 'material-ui/Avatar';
 import _ from 'underscore';
+
+import {browserHistory} from 'react-router';
+import Login from './Login/Login';
 
 
 export default class Nav extends React.Component {
@@ -42,6 +46,10 @@ export default class Nav extends React.Component {
 		this.props.renderNewSection(section);
 	}
 
+	logout(){
+		browserHistory.push('/Login');
+	}
+
 	render() {
 		var menuItems = this.renderMenuItems();
 		return(
@@ -49,11 +57,12 @@ export default class Nav extends React.Component {
 				<MuiThemeProvider>
 					<AppBar 
 						style={{
-							'backgroundColor': '#6AC1B8',
+							'backgroundColor':'#1491D6',
 							'position':'fixed',
 							'top':'0px',
 							'left':'0px',
-							'width':'100%'
+							'width':'100%',
+							'minWidth':'480px'
 						}}
 						zDepth={2}
 						iconElementLeft={
@@ -66,9 +75,16 @@ export default class Nav extends React.Component {
 						    </IconMenu>
 						}
 						iconElementRight={
-							<div>
-							<Avatar src="https://avatars2.githubusercontent.com/u/8779656?v=3&s=460" />
-							</div>
+							
+								<IconMenu
+						      iconButtonElement={<IconButton><DownArrowIcon color={'white'}/></IconButton>}
+						      anchorOrigin={{horizontal: 'right', vertical: 'top'}}
+						      targetOrigin={{horizontal: 'right', vertical: 'top'}}
+						    >
+						    <MenuItem onClick={this.logout}>
+								Log Out
+								</MenuItem>
+						    </IconMenu>
 						}
 					>
 					<h id="centerIcon">{ this.state.currentSection }</h>

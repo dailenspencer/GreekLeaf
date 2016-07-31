@@ -22,12 +22,12 @@ export default class ActionBar extends React.Component {
         
         <button type="button" id="AttachMediaButton">
           <MuiThemeProvider>
-            <CameraIcon style={{'color':'#6AC1B8'}}/>
+            <CameraIcon style={{'color':'#028BF4'}}/>
           </MuiThemeProvider>
         </button>
         <button type="button" id="AttachFileButton">
           <MuiThemeProvider>
-            <AttachmentIcon style={{'color':'#6AC1B8'}}/>
+            <AttachmentIcon style={{'color':'#028BF4'}}/>
           </MuiThemeProvider>
         </button>
         <button type="button" id="PostButton">Post</button>

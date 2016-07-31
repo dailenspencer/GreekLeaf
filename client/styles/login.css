@@ -1,0 +1,61 @@
+#Login {
+	width: 100%;
+	height: 100%;
+	background: url('../Images/BlueToGreen.png') no-repeat center center fixed; 
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
+
+#GreekLeafTitle {
+	position: absolute;
+	top:15px;
+	left:30px;
+	color: white;
+	font-family:'Pacifico', cursive;
+	font-size: 36px;
+}
+
+#GreekLeafHeader {
+	color: white;
+	font-family: 'Raleway', sans-serif;
+	font-weight: 200;
+	font-size: 36px;
+	width: 100%;
+	position: relative;
+	display: inline-block;
+	text-align: center;
+}
+
+#LoginForm {
+	position: absolute;
+	width:50%;
+	height: 400px;
+	transform: translateX(-50%) translateY(-50%);
+	left:50%;
+	top:60%;
+	border-radius: 2%;
+}
+
+#LoginFormBottom {
+	display: inline-block;
+	width:50%;
+	left:24%;
+	height: 40px;
+	position: relative;
+	border-radius: 1.5%;
+  margin-top: 50px;
+}
+
+#LoginEmailInput {
+	box-sizing: border-box;
+  border-style: none;
+	width:100%;
+	height: 100%;
+	margin-top: 0px;
+	background-color: transparent;
+	font-family: "Noto Sans", sans-serif;
+	font-size: 18px;
+}

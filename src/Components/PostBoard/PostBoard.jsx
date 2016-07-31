@@ -1,4 +1,6 @@
 import React from 'react';
+import ProfileContainer from './ProfileContainer/ProfileContainer';
+import DropZone from './DropZone';
 import Loader from './Loader';
 import PostEntryContainer from './PostEntryContainer/PostEntryContainer'
 import PostEntry from './PostEntryContainer/PostEntry';
@@ -52,9 +54,13 @@ export default class PostBoard extends React.Component {
   render() {
     return (
       <div id="PostBoard">
-        <Loader visible={this.state.loaderVisibility}/>
-        <PostCreator/>
-        <PostEntryContainer posts={this.state.posts}/>
+        <ProfileContainer/>
+        <div id="NewsContainer">
+          <DropZone/>
+          <Loader visible={this.state.loaderVisibility}/>
+          <PostCreator/>
+          <PostEntryContainer posts={this.state.posts}/>
+        </div>
       </div>
     );
 

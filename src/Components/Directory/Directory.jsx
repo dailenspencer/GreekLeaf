@@ -62,18 +62,18 @@ export default class Directory extends React.Component {
 	      this.setState({executiveMemberDirectoryEntries: executiveMemberDirectoryEntries});
 	    })
 	    queryForStaff().then((resp) => {
-	    	var staffMemberDirectoryEntries = this.createDirectoryEntryElements(resp);
+					var staffMemberDirectoryEntries = this.createDirectoryEntryElements(resp);
 	      	this.setState({staffMemberDirectoryEntries: staffMemberDirectoryEntries});
 	    })
   	}
 
   	createDirectoryEntryElements(users){
-  		
+  		console.log(users, "users");
   		var directoryEntryElements = []
-
-		users.forEach((user, index) =>{
-  			directoryEntryElements.push(<DirectoryEntry key={index} handleClick={this.handleClick} user={user}/>);
-		})
+		  users.forEach((user, index) => {
+  				directoryEntryElements.push(<DirectoryEntry key={index} handleClick={this.handleClick} user={user}/>);
+			})
+		  console.log(directoryEntryElements);
 		return directoryEntryElements;
   }
 
@@ -92,10 +92,10 @@ export default class Directory extends React.Component {
 				          onChange={this.handleChange}
 				          value={this.state.slideIndex}
 				        >
-				          <Tab label="New Members" value={0} style={{'backgroundColor': '#6AC1B8'}}/>
-				          <Tab label="Brothers" value={1} style={{'backgroundColor': '#6AC1B8'}}/>
-				          <Tab label="Executive Board" value={2} style={{'backgroundColor': '#6AC1B8'}}/>
-				          <Tab label="House Staff" value={3} style={{'backgroundColor': '#6AC1B8'}}/>
+				          <Tab label="New Members" value={0} style={{'backgroundColor': '#1491D6'}}/>
+				          <Tab label="Brothers" value={1} style={{'backgroundColor': '#1491D6'}}/>
+				          <Tab label="Executive Board" value={2} style={{'backgroundColor': '#1491D6'}}/>
+				          <Tab label="House Staff" value={3} style={{'backgroundColor': '#1491D6'}}/>
 				        </Tabs>
 				    </MuiThemeProvider>
 				</div>

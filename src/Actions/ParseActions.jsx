@@ -69,3 +69,21 @@ export function queryForStaff(){
     }
   })
 }
+
+
+
+export function queryForFood(){
+  var foodMenu = Parse.Object.extend("FoodMenu");
+  var query = new Parse.Query(foodMenu);
+  query.equalTo("universityExtension", "Test Group")
+  query.equalTo("Date", "27 July, 2016");
+  return query.find({
+    success: function(results){
+      console.log(results);
+      return results;
+    },
+    error: function(error){
+       alert("Error:" + error.code + " " + error.message);
+    }
+  })
+}

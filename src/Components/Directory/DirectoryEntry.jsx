@@ -20,13 +20,22 @@ class DirectoryEntry extends Component{
 	}
 
 	componentDidMount(){
-		var fullName = this.props.user.get("name");
-		var fullNameArray = fullName.split(" ");
-		var initials = fullNameArray[0].charAt(0) + fullNameArray[1].charAt(0);
-		this.setState({initials: initials})
-		this.setState({fullName: fullName})
-		this.setState({headerText: initials})
-		this.setState({initialsHeaderClass: 'InitialsHeader'})
+		if(this.props.user.get("name") === undefined){
+			var type = this.props.user.get("type");
+			this.setState({initials: type})
+			this.setState({fullName: 'Dailen Spencer'})
+			this.setState({headerText: type})
+			this.setState({initialsHeaderClass: 'InitialsHeader'})
+			return
+		} else {
+			var fullName = this.props.user.get("name");
+			var fullNameArray = fullName.split(" ");
+			var initials = fullNameArray[0].charAt(0) + fullNameArray[1].charAt(0);
+			this.setState({initials: initials})
+			this.setState({fullName: fullName})
+			this.setState({headerText: initials})
+			this.setState({initialsHeaderClass: 'InitialsHeader'})
+		}
 	}
 
 	handleMouseOver(){

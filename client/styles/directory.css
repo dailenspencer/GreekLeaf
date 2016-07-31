@@ -21,8 +21,8 @@
 .DirectoryEntryCircle {
 	width:200px;
 	height:200px;
-	background-color: #D56073;
-	background-color: #6AC1B8;
+	/*background-color: #17B3C1;*/
+	background-color:#53ACA8;
 	border-radius: 100%;
 	margin: 0 auto;
 	margin-top: 50px;
@@ -38,7 +38,7 @@
 	height: 200px;
 	font-family: 'Roboto', sans-serif;
   	font-weight: 300;
-  	font-size: 36px;
+  	font-size: 34px;
 }
 
 .fullNameHeader {
@@ -50,19 +50,8 @@
 	text-align: center;
 	height: 200px;
 	font-family: 'Roboto', sans-serif;
-  	font-weight: 300;
-  	font-size: 28px;
+  font-weight: 300;
+  font-size: 26px;
 }
 
-/*
-#ProfilePopUp {
-	position: fixed;
-	background-color: black;
-	opacity: 0.8;
-	top:50%;
-	left:50%;
-	transform: translateX(-50%) translateY(-50%);
-	width: 500px;
-	height: 500px;
-	border-radius: 2%;
-}*/
+

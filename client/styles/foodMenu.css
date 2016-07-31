@@ -23,8 +23,8 @@
 #FoodMenuContainer p {
 	display: inline-block;
 	font-family: 'Amatic SC';
-    font-size: 50px;
-    padding: 20px;
+  font-size: 50px;
+  width:100%;
 }
 
 #BreakfastContainer {

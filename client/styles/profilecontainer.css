@@ -1,0 +1,14 @@
+#ProfileContainerAvatar {
+	width:120px;
+	height:120px;
+	margin-left: 10px;
+	margin-top: 10px;
+	border-radius: 100%;
+	box-shadow:rgba(0, 0, 0, 0.156863) 0px 3px 10px, rgba(0, 0, 0, 0.227451) 0px 3px 10px;
+}
+
+#EditProfileButton {
+	position: absolute;
+	margin-top: 55px;
+	margin-left: 60px;
+}
