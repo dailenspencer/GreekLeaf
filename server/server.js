@@ -28,3 +28,9 @@ var server = app.listen(8084, function() {
     console.log("Example app listening at http://%s:%s", host, port)
 
 })
+
+
+app.get('/Home', function(req,res){
+	res.sendFile(path.resolve('../client/index.html'));
+})
+
