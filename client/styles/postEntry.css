@@ -12,12 +12,13 @@
   margin-top:10px;
 }
 
-#PostEntryAvatar {
+.PostEntryAvatar {
   display: inline-block;
   vertical-align: top;
   z-index: 100;
   padding-top: 5px;
   padding-left: 5px;
+  cursor: pointer;
 }
 
 #PostEntryAuthor {

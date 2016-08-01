@@ -51,7 +51,7 @@ render() {
 
       <div id="PostEntry">
         <div id="PostEntryTop">
-          <div id="PostEntryAvatar">
+          <div className="PostEntryAvatar">
             <MuiThemeProvider>
               <Avatar src={avatarUrl} />
             </MuiThemeProvider>

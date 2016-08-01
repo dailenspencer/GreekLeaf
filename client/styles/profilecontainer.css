@@ -1,10 +1,25 @@
+#ProfileContainer {
+	width: 500px;
+	display: inline-flex;
+	vertical-align: top;
+	background-color: white;
+	margin-left: 50px;
+	margin-right: -50px;
+	border-radius: 2%;
+}
+
 #ProfileContainerAvatar {
 	width:120px;
 	height:120px;
 	margin-left: 10px;
 	margin-top: 10px;
 	border-radius: 100%;
+	cursor: pointer;
 	box-shadow:rgba(0, 0, 0, 0.156863) 0px 3px 10px, rgba(0, 0, 0, 0.227451) 0px 3px 10px;
+}
+
+#ProfileContainerAvatar:hover {	
+	opacity: 0.7;
 }
 
 #EditProfileButton {

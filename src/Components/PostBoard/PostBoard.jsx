@@ -52,9 +52,17 @@ export default class PostBoard extends React.Component {
   }
 
   render() {
+    var user = {
+      phone: '850-276-9677',
+      email: 'dailenspencer@gmail.com',
+      work:'GreekLeaf, LLC',
+      address:'3516 dragons ridge road PCB, FL',
+      major:'Software Engineering',
+      class:'2018'
+    }
     return (
       <div id="PostBoard">
-        <ProfileContainer/>
+        <ProfileContainer user={user}/>
         <div id="NewsContainer">
           <DropZone/>
           <Loader visible={this.state.loaderVisibility}/>
