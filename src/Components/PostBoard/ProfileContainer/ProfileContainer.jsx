@@ -34,12 +34,13 @@ export default class ProfileContainer extends React.Component {
 
     componentDidMount(){
       this.setState({
-        phone:this.props.user.phone,
-        email:this.props.user.email,
-        work:this.props.user.work,
-        address:this.props.user.address,
-        major:this.props.user.major,
-        class:this.props.user.class
+        profilePicture:this.props.user.get("ProfilePicture"),
+        phone:this.props.user.get("phonenumber"),
+        email:this.props.user.get("email"),
+        work:this.props.user.get("company"),
+        address:this.props.user.get("address"),
+        major:this.props.user.get("major"),
+        class:this.props.user.get("year")
       })
     }
 
@@ -174,11 +175,19 @@ export default class ProfileContainer extends React.Component {
         containerHeight = '650'
       }
 
+      var profilePictureFile = this.state.profilePicture;
+      var avatarUrl;
+      if(profilePictureFile){
+        avatarUrl = profilePictureFile.url();
+      } else {
+        avatarUrl = "https://avatars2.githubusercontent.com/u/8779656?v=3&s=460"
+      }
+
       return(
         <div id="ProfileContainer" style={{'height':containerHeight}}>
           <div id="ProfileContainerAvatar">
             <MuiThemeProvider>
-              <Avatar src="https://avatars2.githubusercontent.com/u/8779656?v=3&s=460" style={{'width':'120px','height':'120px'}} />
+              <Avatar src={avatarUrl} style={{'width':'120px','height':'120px'}} />
             </MuiThemeProvider>
           </div>
           <div id="EditProfileButton">

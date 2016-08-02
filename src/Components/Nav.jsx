@@ -13,6 +13,7 @@ import _ from 'underscore';
 
 import {browserHistory} from 'react-router';
 import Login from './Login/Login';
+import {parseLogout} from '../Actions/ParseActions';
 
 
 export default class Nav extends React.Component {
@@ -47,7 +48,12 @@ export default class Nav extends React.Component {
 	}
 
 	logout(){
-		browserHistory.push('/Login');
+		parseLogout().then((resp) => {
+			console.log('show login');
+			browserHistory.push('/Login');
+		})
+			
+
 	}
 
 	render() {

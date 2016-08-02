@@ -6,45 +6,44 @@ import Directory from './Directory/Directory';
 import FoodMenu from './FoodMenu/FoodMenu';
 import PledgeTrack from './PledgeTrack/PledgeTrack';
 
+import Parse from 'parse';
+import ParseReact from 'parse-react';
+
 
 
 export default class Home extends React.Component {
   mixins: [ParseReact.Mixin]
   constructor(props){
   	super(props);
+    var currentUser = Parse.User.current()
   	this.state = {
-  		visibleComponent : <PostBoard/>,
+  		visibleComponent : <PostBoard user={currentUser}/>
   	}
     this.renderNewSection = this.renderNewSection.bind(this);
   }
 
- 
 
-
-
-
+  
   renderNewSection(section){
-  	switch (section) {
+    var currentUser = Parse.User.current()
+    switch (section) {
   		case 'Home':
- 			this.setState({visibleComponent : <PostBoard/>})
+ 			  this.setState({visibleComponent : <PostBoard user={currentUser}/>})
   			break;
   		case 'Messenger':
-  			this.setState({visibleComponent : <Messenger/>})
+  			this.setState({visibleComponent : <Messenger user={currentUser}/>})
   			break;
   		case 'Directory':
-  			this.setState({visibleComponent : <Directory/>})
+  			this.setState({visibleComponent : <Directory user={currentUser}/>})
   			break;
   		case 'Food Menu':
-  			this.setState({visibleComponent : <FoodMenu/>})
+  			this.setState({visibleComponent : <FoodMenu user={currentUser}/>})
   			break;
   		case 'Pledge Track':
-        console.log('set pledge track');
-  			this.setState({visibleComponent : <PledgeTrack/>})
+  			this.setState({visibleComponent : <PledgeTrack user={currentUser}/>})
   			break;
   		default:
   			break;
-  		
-
   	}
   }
 

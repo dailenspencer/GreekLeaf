@@ -75,6 +75,10 @@
   cursor: pointer;
 }
 
+#AttachMediaButton:focus{
+  outline: 0;
+}
+
 #AttachFileButton {
   position: absolute;
   left:40px;
@@ -84,4 +88,8 @@
   height:25px;
   background-color: transparent;
   cursor: pointer;
+}
+
+#AttachFileButton:focus{
+  outline: 0;
 }
