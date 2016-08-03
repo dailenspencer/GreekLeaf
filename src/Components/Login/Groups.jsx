@@ -1,10 +1,11 @@
 import React from 'react';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import {queryForGroups} from '../../Actions/ParseActions';
+import {queryForGroups,signUpUser} from '../../Actions/ParseActions';
 
 
 import Parse from 'parse';
 import ParseReact from 'parse-react';
+
 
 export default class Groups extends React.Component {
 	constructor(props){
@@ -13,7 +14,8 @@ export default class Groups extends React.Component {
 		this.state = {
 			groupListItems: ''
 		}
-		
+		this.createGroups = this.createGroups.bind(this);
+		this.handleGroupClick = this.handleGroupClick.bind(this);
 	}
 
 	componentDidMount(){
@@ -22,11 +24,20 @@ export default class Groups extends React.Component {
 		})
 	}
 
+	handleGroupClick(organization){
+		this.props.showLoader();
+		signUpUser(this.props.userInfo, organization).then((resp) =>{
+			this.props.showSuccess(resp);
+		}).catch(function(err){
+			this.props.showError(err);
+		})
+	}
+
 	createGroups(groups){
-		var groupListItems = groups.map(function(group){
-			var name = group.get("Organization");
+		var groupListItems = groups.map((group) => {
+			var organization = group.get("Organization");
 			return (
-				<h className="groupListItem">{name}</h>
+				<h className="groupListItem" onClick={() => this.handleGroupClick(organization)}>{organization}</h>
 			)
 		})
 		this.setState({groupListItems: groupListItems})

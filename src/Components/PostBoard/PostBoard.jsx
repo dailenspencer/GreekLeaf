@@ -5,7 +5,7 @@ import Loader from './Loader';
 import PostEntryContainer from './PostEntryContainer/PostEntryContainer'
 import PostEntry from './PostEntryContainer/PostEntry';
 import PostCreator from './PostCreator/PostCreator';
-import {queryPosts} from '../../Actions/ParseActions';
+import {queryPosts, savePost} from '../../Actions/ParseActions';
 
 export default class PostBoard extends React.Component {
   constructor(props){
@@ -14,7 +14,9 @@ export default class PostBoard extends React.Component {
   		posts : '',
       loaderVisibility: 'hidden'
   	}
-
+    this.showLoader = this.showLoader.bind(this);
+    this.hideLoader = this.hideLoader.bind(this);
+    this.handlePost = this.handlePost.bind(this);
     this.createPostElements = this.createPostElements.bind(this);
   }
 
@@ -44,6 +46,7 @@ export default class PostBoard extends React.Component {
     this.setState({posts: postElements})
   }
 
+
   showLoader(){
     this.setState({loaderVisibility:'visible'})
   }
@@ -52,15 +55,25 @@ export default class PostBoard extends React.Component {
     this.setState({loaderVisibility:'hidden'})
   }
 
+  handlePost(text){
+    this.showLoader()
+    savePost(text).then((resp) => {
+      console.log(resp, "resp");
+      this.hideLoader();
+    })
+  }
+
+
+
   render() {
     
     return (
       <div id="PostBoard">
-        <ProfileContainer user={this.props.user}/>
+        <ProfileContainer/>
         <div id="NewsContainer">
           <DropZone/>
           <Loader visible={this.state.loaderVisibility}/>
-          <PostCreator/>
+          <PostCreator handlePost={this.handlePost}/>
           <PostEntryContainer posts={this.state.posts}/>
         </div>
       </div>
@@ -68,3 +81,4 @@ export default class PostBoard extends React.Component {
 
   }
 }
+

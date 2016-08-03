@@ -70,8 +70,9 @@ export default class SignUpForm extends React.Component{
 	validatePhoneField(e){
 
 		var phoneno = /^\d{10}$/;
-		this.setState({phone: phone})
+		
 		var phone = e.target.value;
+		this.setState({phone: phone})
 		if(!phone.match(phoneno)){
 			console.log('invalid phone number');
 			this.setState({phoneErrorText: 'Please enter valid phone number Ex. 8502341156'}, function(){
@@ -148,7 +149,7 @@ export default class SignUpForm extends React.Component{
 			phone:this.state.phone,
 			password:this.state.firstPassword
 		}
-
+		
 		const hintStyle = {
 			'color':'white',
 			'fontSize':'18px',
@@ -192,7 +193,6 @@ export default class SignUpForm extends React.Component{
 			                inputStyle={inputStyle}
 			                onChange={this.validateNameField}
 			                errorText={this.state.nameErrorText}
-			                value="Dailen Spencer"
 			              />
 			        </MuiThemeProvider>
 			        <MuiThemeProvider>

@@ -21,6 +21,24 @@
   cursor: pointer;
 }
 
+.postEntryInitialAvatar {
+  width:40px;
+  height:40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #53ACA8;;
+  border-radius: 100%;
+}
+
+.postEntryInitials {
+  font-family: 'Raleway', sans-serif;
+  font-weight: 300;
+  color: white;
+  font-size: 20px;
+}
+
+
 #PostEntryAuthor {
   font-size: 15px;
   font-family: 'Roboto', sans-serif;

@@ -19,6 +19,23 @@
   padding-left: 5px;
 }
 
+.postCreatorInitialAvatar {
+  width:40px;
+  height:40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #53ACA8;;
+  border-radius: 100%;
+}
+
+.postCreatorInitials {
+  font-family: 'Raleway', sans-serif;
+  font-weight: 300;
+  color: white;
+  font-size: 20px;
+}
+
 #PostCreatorInput {
   display: inline-block;
   vertical-align: top;

@@ -5,6 +5,7 @@ import Avatar from 'material-ui/Avatar';
 import $ from 'jquery';
 import classnames from 'classnames';
 import moment from 'moment';
+import {createMaterialAvatar, postEntryInitialAvatar} from '../../../Helpers/RenderHelpers';
 
 export default class PostEntry extends React.Component {
   constructor(props){
@@ -33,28 +34,27 @@ export default class PostEntry extends React.Component {
 render() {
     let  heartClasses = classnames('heart', this.state.animate);
 
-    //POST DATA 
-    var profilePictureFile = this.props.postData.author.get("ProfilePicture");
-    var avatarUrl;
-    if(profilePictureFile){
-      avatarUrl = profilePictureFile.url();
-    } else {
-      avatarUrl = "https://avatars2.githubusercontent.com/u/8779656?v=3&s=460"
-    }
+    
     var name = this.props.postData.author.get("name");
     var time = moment(new Date(this.props.postData.createdAt.toString())).fromNow();
     var message = this.props.postData.message;
     var likesCount = this.state.likesCount === 0 ? '' : this.state.likesCount;
 
+    //POST DATA 
+    var profilePictureFile = this.props.postData.author.get("ProfilePicture");
+    var avatar;
+    if(profilePictureFile){
+      avatar = createMaterialAvatar(profilePictureFile.url())
+    } else {
+      avatar = postEntryInitialAvatar(name);
+    }
     
     return (
 
       <div id="PostEntry">
         <div id="PostEntryTop">
           <div className="PostEntryAvatar">
-            <MuiThemeProvider>
-              <Avatar src={avatarUrl} />
-            </MuiThemeProvider>
+           {avatar}
           </div>
           <h id="PostEntryAuthor">{name}</h>
           <p id="PostEntryTime">{time}</p>

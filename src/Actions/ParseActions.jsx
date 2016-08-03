@@ -49,6 +49,36 @@ export function queryForGroups(){
   })
 }
 
+export function signUpUser(userInfo, organization){
+  var user = new Parse.User();
+  user.set("universityExtension", organization);
+  user.set("username", userInfo.email);
+  user.set("email", userInfo.email);
+  user.set("password", userInfo.password);
+  user.set("phonenumber", userInfo.phone);
+  user.set("name", userInfo.name);
+  user.set("MessengerNotifications", true);
+  user.set("searchText", userInfo.email + userInfo.password + userInfo.phone + userInfo.name);
+  user.set("address", "Incomplete");
+  user.set("year", "Incomplete");
+  user.set("major", "Incomplete");
+  user.set("company", "Incomplete");
+  
+  
+
+  return user.signUp(null, {
+    success: function(user) {
+      // Hooray! Let them use the app now.
+      return user;
+    },
+    error: function(user, error) {
+      // Show the error message somewhere and let the user try again.
+      alert("Error: " + error.code + " " + error.message);
+    }
+  });
+
+}
+
 export function parseLogout(){
   console.log('parse logout');
   return Parse.User.logOut().then(() => {
@@ -56,6 +86,7 @@ export function parseLogout(){
   });
     
 }
+
 
 /******************************************
 Post Board Query Actions
@@ -92,6 +123,32 @@ export function queryForComments(PostID){
   })
 }
 
+
+export function savePost(text){
+  console.log(text);
+  var Posts = Parse.Object.extend("Posts");
+  var newPost = new Posts();
+
+  var currentUser = Parse.User.current()
+
+  newPost.set("universityExtension", currentUser.get("universityExtension"));
+  newPost.set("Author", currentUser);
+  newPost.set("body", text);
+  newPost.set("uplikes", []);
+  newPost.set("comments", []);
+  newPost.set("executive", false);
+  console.log(newPost);
+  return newPost.save(null, {
+    success: function(post) {
+      alert('New object created with objectId: ' + post.id);
+      return post
+    },
+    error: function(post, error) {
+      alert('Failed to create new object, with error code: ' + error.message);
+      return error;
+    }
+  });
+}
 
 
 /******************************************

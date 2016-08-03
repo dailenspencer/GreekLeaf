@@ -16,6 +16,10 @@ import RaisedButton from 'material-ui/RaisedButton';
 
 import TextField from 'material-ui/TextField';
 
+import {profileContainerInitialAvatar} from '../../../Helpers/RenderHelpers';
+
+import Parse from 'parse';
+import ParseReact from 'parse-react';
 
 
 export default class ProfileContainer extends React.Component {
@@ -33,14 +37,15 @@ export default class ProfileContainer extends React.Component {
     }
 
     componentDidMount(){
+      var currentUser = Parse.User.current()
       this.setState({
-        profilePicture:this.props.user.get("ProfilePicture"),
-        phone:this.props.user.get("phonenumber"),
-        email:this.props.user.get("email"),
-        work:this.props.user.get("company"),
-        address:this.props.user.get("address"),
-        major:this.props.user.get("major"),
-        class:this.props.user.get("year")
+        profilePicture:currentUser.get("ProfilePicture"),
+        phone:currentUser.get("phonenumber"),
+        email:currentUser.get("email"),
+        work:currentUser.get("company"),
+        address:currentUser.get("address"),
+        major:currentUser.get("major"),
+        class:currentUser.get("year")
       })
     }
 
@@ -56,6 +61,16 @@ export default class ProfileContainer extends React.Component {
      this.setState({
         view:'Label'
       });
+     console.log(this.state.email, "email");
+     var currentUser = Parse.User.current()
+     currentUser.set("phonenumber",this.state.phone);
+     currentUser.set("email", this.state.email);
+     currentUser.set("address", this.state.address);
+     currentUser.set("year", this.state.class);
+     currentUser.set("major", this.state.major);
+     currentUser.set("company", this.state.work);
+     currentUser.set("searchText",this.state.phone + this.state.email + this.state.address + this.state.year + this.state.major + this.state.company);
+     currentUser.save();
     }
 
     handleEdit(){
@@ -158,6 +173,15 @@ export default class ProfileContainer extends React.Component {
         </MuiThemeProvider>
       )
     }
+
+
+    createStyledMaterialAvatar(url){
+      return (
+          <MuiThemeProvider>
+                <Avatar src={url} style={{'width':'120px','height':'120px'}} />
+          </MuiThemeProvider>
+        )
+    }
     
     render(){
       var currentDiv;
@@ -175,20 +199,20 @@ export default class ProfileContainer extends React.Component {
         containerHeight = '650'
       }
 
-      var profilePictureFile = this.state.profilePicture;
-      var avatarUrl;
+      var currentUser = Parse.User.current()
+      var profilePictureFile = currentUser.get("ProfilePicture")
+      var name = currentUser.get('name');
+      var avatar;
       if(profilePictureFile){
-        avatarUrl = profilePictureFile.url();
+        avatar = this.createStyledMaterialAvatar(profilePictureFile.url())
       } else {
-        avatarUrl = "https://avatars2.githubusercontent.com/u/8779656?v=3&s=460"
+        avatar = profileContainerInitialAvatar();
       }
 
       return(
         <div id="ProfileContainer" style={{'height':containerHeight}}>
           <div id="ProfileContainerAvatar">
-            <MuiThemeProvider>
-              <Avatar src={avatarUrl} style={{'width':'120px','height':'120px'}} />
-            </MuiThemeProvider>
+            {avatar}
           </div>
           <div id="EditProfileButton">
             <MuiThemeProvider>

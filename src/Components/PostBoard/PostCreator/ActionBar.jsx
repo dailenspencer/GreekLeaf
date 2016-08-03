@@ -30,7 +30,7 @@ export default class ActionBar extends React.Component {
             <AttachmentIcon style={{'color':'#028BF4'}}/>
           </MuiThemeProvider>
         </button>
-        <button type="button" id="PostButton">Post</button>
+        <button type="button" id="PostButton" onClick={this.props.handlePost}>Post</button>
       </div>
     );
 

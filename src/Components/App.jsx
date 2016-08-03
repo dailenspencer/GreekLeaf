@@ -7,7 +7,8 @@ export default class App extends React.Component {
 	
 	componentDidMount(){
 		var currentUser = checkForCurrentUser();
-		if(currentUser){
+		var organizationVerified = currentUser.get("organizationVerified")
+		if(currentUser && organizationVerified){
 			browserHistory.push('/Home');
 		} else {
 			browserHistory.push('/Login');
@@ -22,3 +23,4 @@ export default class App extends React.Component {
 		);
 	}
 }
+

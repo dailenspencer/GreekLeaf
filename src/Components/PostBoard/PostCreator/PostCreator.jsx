@@ -6,25 +6,31 @@ import ActionBar from './ActionBar';
 export default class PostCreator extends React.Component {
   constructor(props){
   	super(props);
+    this.handleTextChange = this.handleTextChange.bind(this);
+    this.handlePost = this.handlePost.bind(this);
   	this.state = {
-  		
+  		text: ''
   	}
-  }
-
-  handleOnFocus(){
     
   }
 
-  handleOnBlur(){
-    
+  handleTextChange(e){
+    this.setState({text: e.target.value})
+  }
+
+  handlePost(){
+    if(this.state.text !== ""){
+      this.props.handlePost(this.state.text);
+    }
   }
 
   render() {
 
+
     return (
       <div id="PostCreator">
-        <PostCreatorTop/>
-        <ActionBar/>
+        <PostCreatorTop handleTextChange={this.handleTextChange}/>
+        <ActionBar handlePost={this.handlePost}/>
       </div>
     );
 

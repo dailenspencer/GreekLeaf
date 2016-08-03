@@ -20,8 +20,11 @@ export default class LoginForm extends React.Component{
 		this.handlePasswordEnter = this.handlePasswordEnter.bind(this);
 	}
 
+	componentDidMount(){
+		$('#LoginFormUsername').attr('autocomplete','off');
+	}
+
 	handleEmailEnter(e){
-		
 		var email = e.target.value;
 		if(e.key === "Enter"){
 			checkForEmail(email).then((resp) => {
@@ -32,7 +35,6 @@ export default class LoginForm extends React.Component{
 					this.props.showSignUpForm(email);
 				}
 			})
-			
 		}
 	}
 
@@ -40,8 +42,13 @@ export default class LoginForm extends React.Component{
 		var username = this.state.email;
 		var password = e.target.value;
 		if(e.key === "Enter" && this.state.passwordFieldIsShowing){
-			parseLogin(username, password).then((resp) => {
-				browserHistory.push('/Home');
+			parseLogin(username, password).then((user) => {
+				var organizationVerified = user.get("organizationVerified");
+				if(organizationVerified){
+					browserHistory.push('/Home');
+					return
+				} 
+				alert('Sorry! Your organization hasnt verified you yet..')
 			}).catch((resp) =>{
 			this.setState({errorText : 'invalid password'});
 			})
@@ -67,45 +74,48 @@ export default class LoginForm extends React.Component{
 		}
 			return (
 				<div id="LoginForm">
-						<h id="GreekLeafHeader">...Everything, Now In One Place</h>
-						<div id="LoginFormUsername" className={this.state.LoginFormUsernameClassName}>
-							<MuiThemeProvider>
-	            	<TextField
-	            		style={{'width':'100%'}}
-	      					hintText="Enter Email"
-	      					hintStyle={hintStyle}
-				      			inputStyle = {{
-				      				'autoComplete':'off',
-											'color': 'white',
-											'width': '100%',
-											'fontFamily': 'Raleway',
-											'fontWeight': '200',
-											'fontSize': '24px'
-										}}
-									onKeyPress={this.handleEmailEnter}
-	    					/>
-	          	</MuiThemeProvider>
-						</div>
-						<div id="LoginFormPassword" className={this.state.LoginFormPasswordClassName}>
-							<MuiThemeProvider>
-	            	<TextField
-	            		style={{'width':'100%'}}
-	      					hintText="Enter Password"
-	      					type="Password"
-	      					errorText={this.state.errorText}
-	      					hintStyle={hintStyle}
-				      			inputStyle = {{
-				      				'autoComplete':'off',
-											'color': 'white',
-											'width': '100%',
-											'fontFamily': 'Raleway',
-											'fontWeight': '200',
-											'fontSize': '30px'
-										}}
-									onKeyPress={this.handlePasswordEnter}
-	    					/>
-	          	</MuiThemeProvider>
-	          	</div>
+							<h id="GreekLeafHeader">...Everything, Now In One Place</h>
+							<div id="LoginFormUsername" className={this.state.LoginFormUsernameClassName}>
+								<MuiThemeProvider>
+		            	<TextField
+		            		style={{'width':'100%','autoComplete':'off'}}
+		      					hintText="Enter Email"
+		      					hintStyle={hintStyle}
+					      			inputStyle = {{
+					      				'autoComplete':'off',
+												'color': 'white',
+												'width': '100%',
+												'fontFamily': 'Raleway',
+												'fontWeight': '200',
+												'fontSize': '24px'
+											}}
+										onKeyPress={this.handleEmailEnter}
+										autoComplete="off"
+		    					/>
+		          	</MuiThemeProvider>
+							</div>
+							<div id="LoginFormPassword" className={this.state.LoginFormPasswordClassName}>
+								<MuiThemeProvider>
+		            	<TextField
+		            		style={{'width':'100%','autoComplete':'off'}}
+		      					hintText="Enter Password"
+		      					type="Password"
+		      					errorText={this.state.errorText}
+		      					hintStyle={hintStyle}
+					      			inputStyle = {{
+					      				'autoComplete':'off',
+												'color': 'white',
+												'width': '100%',
+												'fontFamily': 'Raleway',
+												'fontWeight': '200',
+												'fontSize': '30px'
+											}}
+										onKeyPress={this.handlePasswordEnter}
+										autoComplete="off"
+		    					/>
+		          	</MuiThemeProvider>
+		          	<h id="ForgotPassword">Forgot Your Password?</h>
+		          	</div>
 					</div>
 			)
 	}
