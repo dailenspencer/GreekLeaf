@@ -12,8 +12,8 @@ app = express();
 
 
 
-app.use(express.static('../client'));
-
+app.use(express.static('./client'));
+app.use(express.static(__dirname + '/../client/public'));
 
 
 
@@ -29,6 +29,10 @@ var server = app.listen(8084, function() {
 
 })
 
+app.get('/*', function(req,res){
+  res.sendFile(path.resolve('client', 'index.html'));
+})
+
 
 app.get('/Home', function(req,res){
 	res.sendFile(path.resolve('../client/index.html'));
@@ -36,4 +40,9 @@ app.get('/Home', function(req,res){
 
 app.get('/Login', function(req,res){
 	res.sendFile(path.resolve('../client/index.html'));
+})
+
+
+app.post('/', function(req, res){
+	res.end('All good to go!');
 })
