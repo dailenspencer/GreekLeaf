@@ -12,7 +12,6 @@ export default class PostCreatorTop extends React.Component {
   constructor(props){
   	super(props);
   	this.state = {
-
   	}
   }
 
@@ -23,6 +22,7 @@ export default class PostCreatorTop extends React.Component {
     });
   }
 
+  
   
 
   render() {
@@ -36,7 +36,6 @@ export default class PostCreatorTop extends React.Component {
     } else {
       avatar = postCreatorInitialAvatar(name);
     }
-
     return (
       <div id="PostCreatorTop">
         <div id="PostCreatorAvatar">

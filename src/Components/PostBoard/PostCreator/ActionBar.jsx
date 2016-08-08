@@ -15,11 +15,10 @@ export default class ActionBar extends React.Component {
   }
 
   
+  
   render() {
-
     return (
       <div id="ActionBar">
-        
         <button type="button" id="AttachMediaButton">
           <MuiThemeProvider>
             <CameraIcon style={{'color':'#028BF4'}}/>
@@ -33,6 +32,5 @@ export default class ActionBar extends React.Component {
         <button type="button" id="PostButton" onClick={this.props.handlePost}>Post</button>
       </div>
     );
-
   }
 }

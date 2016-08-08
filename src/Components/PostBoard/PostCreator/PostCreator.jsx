@@ -25,8 +25,6 @@ export default class PostCreator extends React.Component {
   }
 
   render() {
-
-
     return (
       <div id="PostCreator">
         <PostCreatorTop handleTextChange={this.handleTextChange}/>

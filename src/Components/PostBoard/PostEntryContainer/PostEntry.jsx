@@ -30,10 +30,28 @@ export default class PostEntry extends React.Component {
     this.setState({likesCount: this.state.likesCount + 1});
   }
 
+  renderAttachmentSection(attachments){
+    var attachmentList = attachments.map((attachment, index) => {
+        console.log(attachment, "attachment");
+        console.log(attachment._source.type, "source");
+        console.log(attachment._source.file.name, "name");
+      return (
+        <div className="Attachment" key={index}>
+          
+        </div>
+      )
+    })
+    return (
+      <div className="AttachmentSection">
+          {attachmentList}
+      </div>
+    )
+    
+  }
+
  
 render() {
     let  heartClasses = classnames('heart', this.state.animate);
-
     
     var name = this.props.postData.author.get("name");
     var time = moment(new Date(this.props.postData.createdAt.toString())).fromNow();
@@ -48,6 +66,10 @@ render() {
     } else {
       avatar = postEntryInitialAvatar(name);
     }
+
+   
+    var attachments = this.props.postData.attachments;
+    
     
     return (
 
@@ -60,6 +82,7 @@ render() {
           <p id="PostEntryTime">{time}</p>
         </div>
         <p id="PostEntryMessage">{message}</p>
+        { attachments.length ? this.renderAttachmentSection(attachments) : '' }
         <div id="PostEntryActionBar">
           <div className={heartClasses} onClick={this.handleHeartClick}>
           </div>

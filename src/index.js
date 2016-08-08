@@ -12,7 +12,6 @@ Parse.initialize(
   'ig4C5CZdidYDAhl1g87xQTd4OeH35C8YzuJgsQgm'
 );
 
-console.log('initialized Parse');
 
 ReactDOM.render(
 	(

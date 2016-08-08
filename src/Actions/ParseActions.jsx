@@ -35,7 +35,6 @@ export function parseLogin(username, password){
 
 
 export function queryForGroups(){
-  console.log('query for groups');
   var groups = Parse.Object.extend("Groups");
   var query = new Parse.Query(groups);
   return query.find({
@@ -93,7 +92,6 @@ Post Board Query Actions
 ******************************************/
 
 export function queryPosts(universityExtension){
-  console.log(universityExtension);
 	var Posts = Parse.Object.extend("Posts");
     var query = new Parse.Query(Posts).descending('createdAt');
     query.equalTo("universityExtension", universityExtension);
@@ -124,8 +122,7 @@ export function queryForComments(PostID){
 }
 
 
-export function savePost(text){
-  console.log(text);
+export function savePost(text, files){
   var Posts = Parse.Object.extend("Posts");
   var newPost = new Posts();
 
@@ -137,10 +134,17 @@ export function savePost(text){
   newPost.set("uplikes", []);
   newPost.set("comments", []);
   newPost.set("executive", false);
-  console.log(newPost);
+  
+  var parseFiles = files.map(function(file){
+    return new Parse.File("file", file, file.type, file.name);
+  })
+  
+
+
+  newPost.set("Attachments", parseFiles);
+  
   return newPost.save(null, {
     success: function(post) {
-      alert('New object created with objectId: ' + post.id);
       return post
     },
     error: function(post, error) {
@@ -192,7 +196,32 @@ export function queryForFood(){
   query.equalTo("Date", "27 July, 2016");
   return query.find({
     success: function(results){
-      console.log(results);
+      return results;
+    },
+    error: function(error){
+       alert("Error:" + error.code + " " + error.message);
+    }
+  })
+}
+
+
+
+
+/****************************
+Pledge Track Query Actions
+*****************************/
+
+export function queryForLocations(){
+  var currentUser = Parse.User.current();
+  var universityExtension = currentUser.get("universityExtension");
+  console.log(universityExtension);
+  var users = Parse.Object.extend("User");
+  var query = new Parse.Query(users);
+  query.equalTo("universityExtension", universityExtension);
+  query.equalTo("memberStatus","new");
+  query.equalTo("organizationVerified", true);
+  return query.find({
+    success: function(results){
       return results;
     },
     error: function(error){

@@ -23,6 +23,9 @@ export default class CommentCreator extends React.Component {
     });
   }
 
+  handleKeyPress(){
+    console.log('key press');
+  }
 
   render() {
 
@@ -42,7 +45,7 @@ export default class CommentCreator extends React.Component {
         <div id="CommentCreatorAvatar">
           {avatar}
         </div>
-        <textarea rows="3" cols="26" type="text" id="CommentCreatorInput" placeholder="Write a comment..." onFocus={this.handleOnFocus} onBlur={this.handleOnBlur} style={{'height':'50px'}}></textarea>
+        <textarea rows="3" cols="26" type="text" id="CommentCreatorInput" placeholder="Write a comment..." onKeyPress={this.handleKeyPress} onFocus={this.handleOnFocus} onBlur={this.handleOnBlur} style={{'height':'50px'}}></textarea>
       </div>
     );
 
