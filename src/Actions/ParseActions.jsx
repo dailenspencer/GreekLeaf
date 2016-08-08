@@ -136,7 +136,8 @@ export function savePost(text, files){
   newPost.set("executive", false);
   
   var parseFiles = files.map(function(file){
-    return new Parse.File("file", file, file.type, file.name);
+    console.log(file);
+    return new Parse.File("file", file);
   })
   
 
@@ -145,6 +146,14 @@ export function savePost(text, files){
   
   return newPost.save(null, {
     success: function(post) {
+      console.log('success');
+      var attachments = post.get('Attachments');
+      attachments.map(function(attachment){
+        console.log(attachment, "attachment");
+        console.log(attachment._source.type, "source");
+        console.log(attachment._source.file.name, "name");
+
+      })
       return post
     },
     error: function(post, error) {

@@ -33,8 +33,7 @@ export default class PostEntry extends React.Component {
   renderAttachmentSection(attachments){
     var attachmentList = attachments.map((attachment, index) => {
         console.log(attachment, "attachment");
-        console.log(attachment._source.type, "source");
-        console.log(attachment._source.file.name, "name");
+        
       return (
         <div className="Attachment" key={index}>
           

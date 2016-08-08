@@ -26967,13 +26967,21 @@
 	  newPost.set("executive", false);
 	
 	  var parseFiles = files.map(function (file) {
-	    return new _parse2.default.File("file", file, file.type, file.name);
+	    console.log(file);
+	    return new _parse2.default.File("file", file);
 	  });
 	
 	  newPost.set("Attachments", parseFiles);
 	
 	  return newPost.save(null, {
 	    success: function success(post) {
+	      console.log('success');
+	      var attachments = post.get('Attachments');
+	      attachments.map(function (attachment) {
+	        console.log(attachment, "attachment");
+	        console.log(attachment._source.type, "source");
+	        console.log(attachment._source.file.name, "name");
+	      });
 	      return post;
 	    },
 	    error: function error(post, _error7) {
@@ -64713,8 +64721,7 @@
 	    value: function renderAttachmentSection(attachments) {
 	      var attachmentList = attachments.map(function (attachment, index) {
 	        console.log(attachment, "attachment");
-	        console.log(attachment._source.type, "source");
-	        console.log(attachment._source.file.name, "name");
+	
 	        return _react2.default.createElement('div', { className: 'Attachment', key: index });
 	      });
 	      return _react2.default.createElement(
