@@ -34,9 +34,8 @@ export default class PostBoard extends React.Component {
 
 
   queryForPosts(){
-    console.log('query for posts');
-    var currentUser = Parse.User.current()
-    var universityExtension = currentUser.get("universityExtension");
+    const currentUser = Parse.User.current()
+    const universityExtension = currentUser.get("universityExtension");
     queryPosts(universityExtension).then((posts) => {
         this.hideLoader()
         this.setState({posts:posts});
@@ -54,11 +53,17 @@ export default class PostBoard extends React.Component {
   handlePost(text){
     this.showLoader()
     savePost(text, this.state.files).then((resp) => {
+      this.addPost(resp);
       this.hideLoader();
       this.clearTextArea();
-      this.queryForPosts();
       this.removeDropzoneFiles();
     })
+  }
+
+  addPost(post){
+    const posts = this.state.posts;
+    posts.unshift(post);
+    this.setState({posts:posts});
   }
 
   clearTextArea(){

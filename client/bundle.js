@@ -63490,7 +63490,6 @@
 	    value: function queryForPosts() {
 	      var _this2 = this;
 	
-	      console.log('query for posts');
 	      var currentUser = _parse2.default.User.current();
 	      var universityExtension = currentUser.get("universityExtension");
 	      (0, _ParseActions.queryPosts)(universityExtension).then(function (posts) {
@@ -63515,11 +63514,18 @@
 	
 	      this.showLoader();
 	      (0, _ParseActions.savePost)(text, this.state.files).then(function (resp) {
+	        _this3.addPost(resp);
 	        _this3.hideLoader();
 	        _this3.clearTextArea();
-	        _this3.queryForPosts();
 	        _this3.removeDropzoneFiles();
 	      });
+	    }
+	  }, {
+	    key: 'addPost',
+	    value: function addPost(post) {
+	      var posts = this.state.posts;
+	      posts.unshift(post);
+	      this.setState({ posts: posts });
 	    }
 	  }, {
 	    key: 'clearTextArea',
@@ -64858,6 +64864,7 @@
 	  }, {
 	    key: 'render',
 	    value: function render() {
+	      console.log(this.props.posts.length);
 	      var postElements = this.createPostElements(this.props.posts);
 	      return _react2.default.createElement(
 	        'div',
@@ -89870,7 +89877,6 @@
 	  }, {
 	    key: 'handlePost',
 	    value: function handlePost() {
-	      console.log(this.props.currentFiles.length);
 	      if (this.state.text !== "" || this.props.currentFiles.length !== 0) {
 	        this.props.handlePost(this.state.text);
 	      }

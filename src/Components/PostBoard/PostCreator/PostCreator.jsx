@@ -19,7 +19,6 @@ export default class PostCreator extends React.Component {
   }
 
   handlePost(){
-    console.log(this.props.currentFiles.length);
     if(this.state.text !== "" || this.props.currentFiles.length !== 0){
       this.props.handlePost(this.state.text);
     }

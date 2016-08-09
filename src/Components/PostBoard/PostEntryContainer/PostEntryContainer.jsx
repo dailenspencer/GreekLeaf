@@ -29,6 +29,7 @@ export default class PostEntryContainer extends React.Component {
   }
 
   render() {
+    console.log(this.props.posts.length);
     var postElements = this.createPostElements(this.props.posts);
     return (
       <div id="PostEntryContainer">
