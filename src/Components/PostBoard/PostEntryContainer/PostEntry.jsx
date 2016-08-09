@@ -18,7 +18,7 @@ export default class PostEntry extends React.Component {
     this.handleHeartClick = this.handleHeartClick.bind(this);
   }
 
-  
+
 
 
   handleHeartClick(){
@@ -32,11 +32,10 @@ export default class PostEntry extends React.Component {
 
   renderAttachmentSection(attachments){
     var attachmentList = attachments.map((attachment, index) => {
-        console.log(attachment, "attachment");
-        
+
       return (
         <div className="Attachment" key={index}>
-          
+          <a href={attachment.url()} target="_blank">{attachment.url()}</a>
         </div>
       )
     })
@@ -45,19 +44,19 @@ export default class PostEntry extends React.Component {
           {attachmentList}
       </div>
     )
-    
+
   }
 
- 
+
 render() {
     let  heartClasses = classnames('heart', this.state.animate);
-    
+
     var name = this.props.postData.author.get("name");
     var time = moment(new Date(this.props.postData.createdAt.toString())).fromNow();
     var message = this.props.postData.message;
     var likesCount = this.state.likesCount === 0 ? '' : this.state.likesCount;
 
-    //POST DATA 
+    //POST DATA
     var profilePictureFile = this.props.postData.author.get("ProfilePicture");
     var avatar;
     if(profilePictureFile){
@@ -66,10 +65,10 @@ render() {
       avatar = postEntryInitialAvatar(name);
     }
 
-   
+
     var attachments = this.props.postData.attachments;
-    
-    
+
+
     return (
 
       <div id="PostEntry">

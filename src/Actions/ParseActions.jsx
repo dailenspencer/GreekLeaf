@@ -29,8 +29,8 @@ export function parseLogin(username, password){
     return error;
   }
 });
-  
- 
+
+
 }
 
 
@@ -62,8 +62,8 @@ export function signUpUser(userInfo, organization){
   user.set("year", "Incomplete");
   user.set("major", "Incomplete");
   user.set("company", "Incomplete");
-  
-  
+
+
 
   return user.signUp(null, {
     success: function(user) {
@@ -81,9 +81,9 @@ export function signUpUser(userInfo, organization){
 export function parseLogout(){
   console.log('parse logout');
   return Parse.User.logOut().then(() => {
-    return 
+    return
   });
-    
+
 }
 
 
@@ -108,7 +108,7 @@ export function queryPosts(universityExtension){
 
 export function queryForComments(PostID){
   var Comments = Parse.Object.extend("Comments");
-  var query = new Parse.Query(Comments).descending('createdAt');
+  var query = new Parse.Query(Comments).ascending('createdAt');
   query.equalTo("PostId", PostID);
   query.include("Author");
   return query.find({
@@ -134,26 +134,17 @@ export function savePost(text, files){
   newPost.set("uplikes", []);
   newPost.set("comments", []);
   newPost.set("executive", false);
-  
+
   var parseFiles = files.map(function(file){
-    console.log(file);
-    return new Parse.File("file", file);
+    return new Parse.File("file", file, "image/png");
   })
-  
+
 
 
   newPost.set("Attachments", parseFiles);
-  
+
   return newPost.save(null, {
     success: function(post) {
-      console.log('success');
-      var attachments = post.get('Attachments');
-      attachments.map(function(attachment){
-        console.log(attachment, "attachment");
-        console.log(attachment._source.type, "source");
-        console.log(attachment._source.file.name, "name");
-
-      })
       return post
     },
     error: function(post, error) {
@@ -161,6 +152,29 @@ export function savePost(text, files){
       return error;
     }
   });
+}
+
+export function saveComment(text, postId){
+  var author = Parse.User.current();
+
+  var Comments = Parse.Object.extend("Comments");
+  var newComment = new Comments();
+
+  newComment.set("PostId", postId);
+  newComment.set("Text", text);
+  newComment.set("Author", author);
+
+  return newComment.save(null, {
+    success: function(comment) {
+      return comment
+    },
+    error: function(comment, error) {
+      alert('Failed to create new object, with error code: ' + error.message);
+      return error;
+    }
+  })
+
+
 }
 
 

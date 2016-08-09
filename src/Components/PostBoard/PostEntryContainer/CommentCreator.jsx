@@ -8,12 +8,15 @@ import {createMaterialAvatar, postCreatorInitialAvatar} from '../../../Helpers/R
 import Parse from 'parse';
 import ParseReact from 'parse-react';
 
+import {saveComment} from '../../../Actions/ParseActions';
+
 export default class CommentCreator extends React.Component {
   constructor(props){
   	super(props);
   	this.state = {
-  	
+
   	}
+    this.handleKeyPress = this.handleKeyPress.bind(this);
   }
 
   componentDidMount(){
@@ -23,8 +26,14 @@ export default class CommentCreator extends React.Component {
     });
   }
 
-  handleKeyPress(){
+  handleKeyPress(e){
     console.log('key press');
+    if(e.key === "Enter" && e.target.value !== ""){
+      saveComment(e.target.value,this.props.postId).then((resp) => {
+        this.props.loadComments();
+        $('#CommentCreatorInput').val("");
+      })
+    }
   }
 
   render() {
@@ -45,7 +54,7 @@ export default class CommentCreator extends React.Component {
         <div id="CommentCreatorAvatar">
           {avatar}
         </div>
-        <textarea rows="3" cols="26" type="text" id="CommentCreatorInput" placeholder="Write a comment..." onKeyPress={this.handleKeyPress} onFocus={this.handleOnFocus} onBlur={this.handleOnBlur} style={{'height':'50px'}}></textarea>
+        <textarea rows="3" cols="26" type="text" id="CommentCreatorInput" placeholder="Write a comment..." onKeyPress={this.handleKeyPress.bind(this)} onFocus={this.handleOnFocus} onBlur={this.handleOnBlur} style={{'height':'50px'}}></textarea>
       </div>
     );
 

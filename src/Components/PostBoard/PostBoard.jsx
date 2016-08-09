@@ -54,7 +54,7 @@ export default class PostBoard extends React.Component {
         id : post.id,
         attachments: attachments
     }
-       
+
        return (
           <PostEntry key={index} postData={postData}/>
         )
@@ -111,7 +111,7 @@ export default class PostBoard extends React.Component {
         <div id="NewsContainer">
           <DropZoneArea addFileToStorage={this.addFileToStorage} setMyDropZone={this.setMyDropZone}/>
           <Loader visible={this.state.loaderVisibility}/>
-          <PostCreator handlePost={this.handlePost}/>
+          <PostCreator handlePost={this.handlePost} currentFiles={this.state.files}/>
           <PostEntryContainer posts={this.state.posts}/>
         </div>
       </div>
