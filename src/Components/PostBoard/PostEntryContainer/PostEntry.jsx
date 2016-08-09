@@ -6,20 +6,38 @@ import $ from 'jquery';
 import classnames from 'classnames';
 import moment from 'moment';
 import {createMaterialAvatar, postEntryInitialAvatar} from '../../../Helpers/RenderHelpers';
+import {queryForComments} from '../../../Actions/ParseActions';
 
 export default class PostEntry extends React.Component {
   constructor(props){
   	super(props);
   	this.state = {
   	 animate: '',
-     likesCount: this.props.postData.likes.length
+     likesCount: this.props.postData.likes.length,
+     comments: []
   	}
 
     this.handleHeartClick = this.handleHeartClick.bind(this);
+    this.loadComments = this.loadComments.bind(this);
+    this.addComment = this.addComment.bind(this);
   }
 
+  componentDidMount(){
+    this.loadComments();
+  }
 
+  loadComments(){
+    queryForComments(this.props.postData.id).then((comments) => {
+      this.setState({comments: comments})
+    })
+  }
 
+  addComment(comment){
+    var comments = this.state.comments;
+    comments.push(comment);
+    console.log(comments);
+    this.setState({comments: comments});
+  }
 
   handleHeartClick(){
     if(this.state.animate === ''){
@@ -86,7 +104,7 @@ render() {
           </div>
           <div className="Likes">{likesCount}</div>
         </div>
-        <CommentSection postId={this.props.postData.id}/>
+        <CommentSection postId={this.props.postData.id} comments={this.state.comments} addComment={this.addComment}/>
       </div>
     );
 

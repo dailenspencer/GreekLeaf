@@ -9,11 +9,30 @@ export default class PostEntryContainer extends React.Component {
   	}
   }
 
-  render() {
+  createPostElements(posts){
+    var postElements = posts.map(function(post, index){
+    var attachments = post.get("Attachments") ? post.get("Attachments") : []
+    var postData = {
+        author : post.get("Author"),
+        message : post.get("body"),
+        createdAt : post.get("createdAt"),
+        likes : post.get("uplikes"),
+        id : post.id,
+        attachments: attachments
+    }
 
+       return (
+          <PostEntry key={index} postData={postData}/>
+        )
+    })
+    return postElements;
+  }
+
+  render() {
+    var postElements = this.createPostElements(this.props.posts);
     return (
       <div id="PostEntryContainer">
-        {this.props.posts}
+        {postElements}
       </div>
     );
 

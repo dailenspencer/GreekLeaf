@@ -13,26 +13,12 @@ export default class CommentSection extends React.Component {
   constructor(props){
   	super(props);
   	this.state = {
-  	   comments : ''
+
   	}
     this.createCommentElements = this.createCommentElements.bind(this);
-    this.loadComments = this.loadComments.bind(this);
   }
 
-  componentDidMount(){
-    this.loadComments();
-  }
-
-  loadComments(){
-    console.log(this.props.postId);
-    queryForComments(this.props.postId).then((resp) => {
-      this.createCommentElements(resp);
-      this.clearCommentCreator();
-    })
-  }
-
-
-
+  
   createCommentElements(comments){
     var commentElements = comments.map(function(comment, index){
       var commentData = {
@@ -41,17 +27,16 @@ export default class CommentSection extends React.Component {
       }
       return <CommentEntry key={index} commentData={commentData}/>
     })
-    console.log('set state');
-    this.setState({comments: commentElements})
+    return commentElements;
   }
 
 
   render() {
+    var commentElements = this.createCommentElements(this.props.comments);
     return (
       <div id="CommentSection">
-        {this.state.comments}
-        <CommentCreator postId={this.props.postId} loadComments={this.loadComments}/>
-
+        {commentElements}
+        <CommentCreator postId={this.props.postId} loadComments={this.loadComments} addComment={this.props.addComment}/>
       </div>
     );
 

@@ -27,10 +27,10 @@ export default class CommentCreator extends React.Component {
   }
 
   handleKeyPress(e){
-    console.log('key press');
     if(e.key === "Enter" && e.target.value !== ""){
-      saveComment(e.target.value,this.props.postId).then((resp) => {
-        this.props.loadComments();
+      const text = e.target.value
+      saveComment(text,this.props.postId).then((resp) => {
+        this.props.addComment(resp);
         $('#CommentCreatorInput').val("");
       })
     }

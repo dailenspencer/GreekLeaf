@@ -63465,14 +63465,13 @@
 	    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(PostBoard).call(this, props));
 	
 	    _this.state = {
-	      posts: '',
+	      posts: [],
 	      loaderVisibility: 'hidden',
 	      files: []
 	    };
 	    _this.showLoader = _this.showLoader.bind(_this);
 	    _this.hideLoader = _this.hideLoader.bind(_this);
 	    _this.handlePost = _this.handlePost.bind(_this);
-	    _this.createPostElements = _this.createPostElements.bind(_this);
 	    _this.queryForPosts = _this.queryForPosts.bind(_this);
 	    _this.addFileToStorage = _this.addFileToStorage.bind(_this);
 	    _this.removeDropzoneFiles = _this.removeDropzoneFiles.bind(_this);
@@ -63491,30 +63490,13 @@
 	    value: function queryForPosts() {
 	      var _this2 = this;
 	
+	      console.log('query for posts');
 	      var currentUser = _parse2.default.User.current();
 	      var universityExtension = currentUser.get("universityExtension");
-	      (0, _ParseActions.queryPosts)(universityExtension).then(function (resp) {
-	        _this2.createPostElements(resp);
+	      (0, _ParseActions.queryPosts)(universityExtension).then(function (posts) {
 	        _this2.hideLoader();
+	        _this2.setState({ posts: posts });
 	      });
-	    }
-	  }, {
-	    key: 'createPostElements',
-	    value: function createPostElements(posts) {
-	      var postElements = posts.map(function (post, index) {
-	        var attachments = post.get("Attachments") ? post.get("Attachments") : [];
-	        var postData = {
-	          author: post.get("Author"),
-	          message: post.get("body"),
-	          createdAt: post.get("createdAt"),
-	          likes: post.get("uplikes"),
-	          id: post.id,
-	          attachments: attachments
-	        };
-	
-	        return _react2.default.createElement(_PostEntry2.default, { key: index, postData: postData });
-	      });
-	      this.setState({ posts: postElements });
 	    }
 	  }, {
 	    key: 'showLoader',
@@ -63547,7 +63529,6 @@
 	  }, {
 	    key: 'addFileToStorage',
 	    value: function addFileToStorage(file) {
-	      console.log('add file to storage');
 	      var files = this.state.files;
 	      files.push(file);
 	      this.setState({ files: files });
@@ -64857,13 +64838,31 @@
 	  }
 	
 	  _createClass(PostEntryContainer, [{
+	    key: 'createPostElements',
+	    value: function createPostElements(posts) {
+	      var postElements = posts.map(function (post, index) {
+	        var attachments = post.get("Attachments") ? post.get("Attachments") : [];
+	        var postData = {
+	          author: post.get("Author"),
+	          message: post.get("body"),
+	          createdAt: post.get("createdAt"),
+	          likes: post.get("uplikes"),
+	          id: post.id,
+	          attachments: attachments
+	        };
+	
+	        return _react2.default.createElement(_PostEntry2.default, { key: index, postData: postData });
+	      });
+	      return postElements;
+	    }
+	  }, {
 	    key: 'render',
 	    value: function render() {
-	
+	      var postElements = this.createPostElements(this.props.posts);
 	      return _react2.default.createElement(
 	        'div',
 	        { id: 'PostEntryContainer' },
-	        this.props.posts
+	        postElements
 	      );
 	    }
 	  }]);
@@ -64915,6 +64914,8 @@
 	
 	var _RenderHelpers = __webpack_require__(653);
 	
+	var _ParseActions = __webpack_require__(240);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -64933,14 +64934,39 @@
 	
 	    _this.state = {
 	      animate: '',
-	      likesCount: _this.props.postData.likes.length
+	      likesCount: _this.props.postData.likes.length,
+	      comments: []
 	    };
 	
 	    _this.handleHeartClick = _this.handleHeartClick.bind(_this);
+	    _this.loadComments = _this.loadComments.bind(_this);
+	    _this.addComment = _this.addComment.bind(_this);
 	    return _this;
 	  }
 	
 	  _createClass(PostEntry, [{
+	    key: 'componentDidMount',
+	    value: function componentDidMount() {
+	      this.loadComments();
+	    }
+	  }, {
+	    key: 'loadComments',
+	    value: function loadComments() {
+	      var _this2 = this;
+	
+	      (0, _ParseActions.queryForComments)(this.props.postData.id).then(function (comments) {
+	        _this2.setState({ comments: comments });
+	      });
+	    }
+	  }, {
+	    key: 'addComment',
+	    value: function addComment(comment) {
+	      var comments = this.state.comments;
+	      comments.push(comment);
+	      console.log(comments);
+	      this.setState({ comments: comments });
+	    }
+	  }, {
 	    key: 'handleHeartClick',
 	    value: function handleHeartClick() {
 	      if (this.state.animate === '') {
@@ -65030,7 +65056,7 @@
 	            likesCount
 	          )
 	        ),
-	        _react2.default.createElement(_CommentSection2.default, { postId: this.props.postData.id })
+	        _react2.default.createElement(_CommentSection2.default, { postId: this.props.postData.id, comments: this.state.comments, addComment: this.addComment })
 	      );
 	    }
 	  }]);
@@ -65102,31 +65128,12 @@
 	
 	    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(CommentSection).call(this, props));
 	
-	    _this.state = {
-	      comments: ''
-	    };
+	    _this.state = {};
 	    _this.createCommentElements = _this.createCommentElements.bind(_this);
-	    _this.loadComments = _this.loadComments.bind(_this);
 	    return _this;
 	  }
 	
 	  _createClass(CommentSection, [{
-	    key: 'componentDidMount',
-	    value: function componentDidMount() {
-	      this.loadComments();
-	    }
-	  }, {
-	    key: 'loadComments',
-	    value: function loadComments() {
-	      var _this2 = this;
-	
-	      console.log(this.props.postId);
-	      (0, _ParseActions.queryForComments)(this.props.postId).then(function (resp) {
-	        _this2.createCommentElements(resp);
-	        _this2.clearCommentCreator();
-	      });
-	    }
-	  }, {
 	    key: 'createCommentElements',
 	    value: function createCommentElements(comments) {
 	      var commentElements = comments.map(function (comment, index) {
@@ -65136,17 +65143,17 @@
 	        };
 	        return _react2.default.createElement(_CommentEntry2.default, { key: index, commentData: commentData });
 	      });
-	      console.log('set state');
-	      this.setState({ comments: commentElements });
+	      return commentElements;
 	    }
 	  }, {
 	    key: 'render',
 	    value: function render() {
+	      var commentElements = this.createCommentElements(this.props.comments);
 	      return _react2.default.createElement(
 	        'div',
 	        { id: 'CommentSection' },
-	        this.state.comments,
-	        _react2.default.createElement(_CommentCreator2.default, { postId: this.props.postId, loadComments: this.loadComments })
+	        commentElements,
+	        _react2.default.createElement(_CommentCreator2.default, { postId: this.props.postId, loadComments: this.loadComments, addComment: this.props.addComment })
 	      );
 	    }
 	  }]);
@@ -75409,10 +75416,10 @@
 	    value: function handleKeyPress(e) {
 	      var _this2 = this;
 	
-	      console.log('key press');
 	      if (e.key === "Enter" && e.target.value !== "") {
-	        (0, _ParseActions.saveComment)(e.target.value, this.props.postId).then(function (resp) {
-	          _this2.props.loadComments();
+	        var text = e.target.value;
+	        (0, _ParseActions.saveComment)(text, this.props.postId).then(function (resp) {
+	          _this2.props.addComment(resp);
 	          (0, _jquery2.default)('#CommentCreatorInput').val("");
 	        });
 	      }

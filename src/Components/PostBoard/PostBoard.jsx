@@ -14,14 +14,13 @@ export default class PostBoard extends React.Component {
   constructor(props){
   	super(props);
   	this.state = {
-  		posts : '',
+  		posts : [],
       loaderVisibility: 'hidden',
       files : []
   	}
     this.showLoader = this.showLoader.bind(this);
     this.hideLoader = this.hideLoader.bind(this);
     this.handlePost = this.handlePost.bind(this);
-    this.createPostElements = this.createPostElements.bind(this);
     this.queryForPosts = this.queryForPosts.bind(this);
     this.addFileToStorage = this.addFileToStorage.bind(this);
     this.removeDropzoneFiles = this.removeDropzoneFiles.bind(this);
@@ -33,36 +32,16 @@ export default class PostBoard extends React.Component {
     this.queryForPosts();
   }
 
+
   queryForPosts(){
+    console.log('query for posts');
     var currentUser = Parse.User.current()
     var universityExtension = currentUser.get("universityExtension");
-    queryPosts(universityExtension).then((resp) => {
-      this.createPostElements(resp);
-      this.hideLoader()
+    queryPosts(universityExtension).then((posts) => {
+        this.hideLoader()
+        this.setState({posts:posts});
     })
   }
-
-
-  createPostElements(posts){
-    var postElements = posts.map(function(post, index){
-    var attachments = post.get("Attachments") ? post.get("Attachments") : []
-    var postData = {
-        author : post.get("Author"),
-        message : post.get("body"),
-        createdAt : post.get("createdAt"),
-        likes : post.get("uplikes"),
-        id : post.id,
-        attachments: attachments
-    }
-
-       return (
-          <PostEntry key={index} postData={postData}/>
-        )
-    })
-    this.setState({posts: postElements})
-  }
-
-
 
   showLoader(){
     this.setState({loaderVisibility:'visible'})
@@ -87,7 +66,6 @@ export default class PostBoard extends React.Component {
   }
 
   addFileToStorage(file){
-    console.log('add file to storage');
     var files = this.state.files;
     files.push(file);
     this.setState({files: files});
