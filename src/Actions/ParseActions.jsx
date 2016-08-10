@@ -177,6 +177,20 @@ export function saveComment(text, postId){
 
 }
 
+export function saveLike(postId) {
+  var currentUser = Parse.User.current();
+  var query = Parse.Object.extend("Posts");
+  query.equalTo("objectId", postId);
+  return query.find({
+    success: function(post){
+      console.log(post, "post")
+    },
+    error: function(error) {
+      alert("Error:" + error.code + " " + error.message);
+    }
+  })
+}
+
 
 /******************************************
 Directory Query Actions

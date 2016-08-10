@@ -27203,6 +27203,7 @@
 	exports.queryForComments = queryForComments;
 	exports.savePost = savePost;
 	exports.saveComment = saveComment;
+	exports.saveLike = saveLike;
 	exports.queryForMembers = queryForMembers;
 	exports.queryForStaff = queryForStaff;
 	exports.queryForFood = queryForFood;
@@ -27380,6 +27381,20 @@
 	  });
 	}
 	
+	function saveLike(postId) {
+	  var currentUser = _parse2.default.User.current();
+	  var query = _parse2.default.Object.extend("Posts");
+	  query.equalTo("objectId", postId);
+	  return query.find({
+	    success: function success(post) {
+	      console.log(post, "post");
+	    },
+	    error: function error(_error9) {
+	      alert("Error:" + _error9.code + " " + _error9.message);
+	    }
+	  });
+	}
+	
 	/******************************************
 	Directory Query Actions
 	******************************************/
@@ -27392,8 +27407,8 @@
 	    success: function success(results) {
 	      return results;
 	    },
-	    error: function error(_error9) {
-	      alert("Error:" + _error9.code + " " + _error9.message);
+	    error: function error(_error10) {
+	      alert("Error:" + _error10.code + " " + _error10.message);
 	    }
 	  });
 	}
@@ -27406,8 +27421,8 @@
 	    success: function success(results) {
 	      return results;
 	    },
-	    error: function error(_error10) {
-	      alert("Error:" + _error10.code + " " + _error10.message);
+	    error: function error(_error11) {
+	      alert("Error:" + _error11.code + " " + _error11.message);
 	    }
 	  });
 	}
@@ -27421,8 +27436,8 @@
 	    success: function success(results) {
 	      return results;
 	    },
-	    error: function error(_error11) {
-	      alert("Error:" + _error11.code + " " + _error11.message);
+	    error: function error(_error12) {
+	      alert("Error:" + _error12.code + " " + _error12.message);
 	    }
 	  });
 	}
@@ -27444,8 +27459,8 @@
 	    success: function success(results) {
 	      return results;
 	    },
-	    error: function error(_error12) {
-	      alert("Error:" + _error12.code + " " + _error12.message);
+	    error: function error(_error13) {
+	      alert("Error:" + _error13.code + " " + _error13.message);
 	    }
 	  });
 	}
@@ -64977,11 +64992,18 @@
 	    key: 'handleHeartClick',
 	    value: function handleHeartClick() {
 	      if (this.state.animate === '') {
-	        this.setState({ animate: 'heartAnimation' });
+	        (0, _ParseActions.saveLike)(this.props.postData.id);
+	        this.setState({
+	          animate: 'heartAnimation',
+	          likesCount: this.state.likesCount + 1
+	        });
 	      } else {
-	        this.setState({ animate: '' });
+	        (0, _ParseActions.saveLike)(this.props.postData.id);
+	        this.setState({
+	          animate: '',
+	          likesCount: this.state.likesCount - 1
+	        });
 	      }
-	      this.setState({ likesCount: this.state.likesCount + 1 });
 	    }
 	  }, {
 	    key: 'renderAttachmentSection',

@@ -6,7 +6,7 @@ import $ from 'jquery';
 import classnames from 'classnames';
 import moment from 'moment';
 import {createMaterialAvatar, postEntryInitialAvatar} from '../../../Helpers/RenderHelpers';
-import {queryForComments} from '../../../Actions/ParseActions';
+import {queryForComments, saveLike} from '../../../Actions/ParseActions';
 
 export default class PostEntry extends React.Component {
   constructor(props){
@@ -41,11 +41,18 @@ export default class PostEntry extends React.Component {
 
   handleHeartClick(){
     if(this.state.animate === ''){
-      this.setState({animate:'heartAnimation'})
+      saveLike(this.props.postData.id);
+      this.setState({
+        animate:'heartAnimation',
+        likesCount: this.state.likesCount + 1
+      })
     } else {
-      this.setState({animate:''})
+      saveLike(this.props.postData.id);
+      this.setState({
+        animate:'',
+        likesCount: this.state.likesCount - 1
+      })
     }
-    this.setState({likesCount: this.state.likesCount + 1});
   }
 
   renderAttachmentSection(attachments){
