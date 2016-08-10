@@ -104,7 +104,7 @@ render() {
           </div>
           <div className="Likes">{likesCount}</div>
         </div>
-        <CommentSection postId={this.props.postData.id} comments={this.state.comments} addComment={this.addComment}/>
+        <CommentSection postId={this.props.postData.id} comments={this.state.comments} addComment={this.addComment} key={this.props.postData.id}/>
       </div>
     );
 

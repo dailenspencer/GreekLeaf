@@ -64857,7 +64857,7 @@
 	          attachments: attachments
 	        };
 	
-	        return _react2.default.createElement(_PostEntry2.default, { key: index, postData: postData });
+	        return _react2.default.createElement(_PostEntry2.default, { key: postData.id, postData: postData });
 	      });
 	      return postElements;
 	    }
@@ -65063,7 +65063,7 @@
 	            likesCount
 	          )
 	        ),
-	        _react2.default.createElement(_CommentSection2.default, { postId: this.props.postData.id, comments: this.state.comments, addComment: this.addComment })
+	        _react2.default.createElement(_CommentSection2.default, { postId: this.props.postData.id, comments: this.state.comments, addComment: this.addComment, key: this.props.postData.id })
 	      );
 	    }
 	  }]);

@@ -5,7 +5,7 @@ export default class PostEntryContainer extends React.Component {
   constructor(props){
   	super(props);
   	this.state = {
-  		
+
   	}
   }
 
@@ -22,7 +22,7 @@ export default class PostEntryContainer extends React.Component {
     }
 
        return (
-          <PostEntry key={index} postData={postData}/>
+          <PostEntry key={postData.id} postData={postData}/>
         )
     })
     return postElements;
