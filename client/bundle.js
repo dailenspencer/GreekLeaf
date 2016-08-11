@@ -27204,6 +27204,7 @@
 	exports.savePost = savePost;
 	exports.saveComment = saveComment;
 	exports.saveLike = saveLike;
+	exports.findPost = findPost;
 	exports.queryForMembers = queryForMembers;
 	exports.queryForStaff = queryForStaff;
 	exports.queryForFood = queryForFood;
@@ -27253,7 +27254,6 @@
 	  var query = new _parse2.default.Query(groups);
 	  return query.find({
 	    success: function success(results) {
-	      console.log('results', results);
 	      return results;
 	    },
 	    error: function error(_error3) {
@@ -27382,15 +27382,47 @@
 	}
 	
 	function saveLike(postId) {
-	  var currentUser = _parse2.default.User.current();
-	  var query = _parse2.default.Object.extend("Posts");
+	  var currentUserName = _parse2.default.User.current().get("name");
+	  var query = new _parse2.default.Query("Posts");
 	  query.equalTo("objectId", postId);
 	  return query.find({
-	    success: function success(post) {
-	      console.log(post, "post");
+	    success: function success(results) {
+	      var post = results[0];
+	      var likes = post.get('uplikes');
+	      if (~likes.indexOf(currentUserName)) {
+	        likes = removeFromLikes(likes, currentUserName);
+	        post.set('likes', likes);
+	        post.save();
+	        return;
+	      }
+	      likes.push(currentUserName);
+	      post.set('likes', likes);
+	      post.save();
 	    },
 	    error: function error(_error9) {
 	      alert("Error:" + _error9.code + " " + _error9.message);
+	    }
+	  });
+	}
+	
+	function removeFromLikes(likes, name) {
+	  var index = likes.indexOf(name);
+	  if (index > -1) {
+	    likes.splice(index, 1);
+	  }
+	  return likes;
+	}
+	
+	function findPost(postId) {
+	  var currentUserName = _parse2.default.User.current().get("name");
+	  var query = new _parse2.default.Query("Posts");
+	  query.equalTo("objectId", postId);
+	  return query.find({
+	    success: function success(results) {
+	      return results;
+	    },
+	    error: function error(_error10) {
+	      alert("Error:" + _error10.code + " " + _error10.message);
 	    }
 	  });
 	}
@@ -27407,8 +27439,8 @@
 	    success: function success(results) {
 	      return results;
 	    },
-	    error: function error(_error10) {
-	      alert("Error:" + _error10.code + " " + _error10.message);
+	    error: function error(_error11) {
+	      alert("Error:" + _error11.code + " " + _error11.message);
 	    }
 	  });
 	}
@@ -27421,8 +27453,8 @@
 	    success: function success(results) {
 	      return results;
 	    },
-	    error: function error(_error11) {
-	      alert("Error:" + _error11.code + " " + _error11.message);
+	    error: function error(_error12) {
+	      alert("Error:" + _error12.code + " " + _error12.message);
 	    }
 	  });
 	}
@@ -27436,8 +27468,8 @@
 	    success: function success(results) {
 	      return results;
 	    },
-	    error: function error(_error12) {
-	      alert("Error:" + _error12.code + " " + _error12.message);
+	    error: function error(_error13) {
+	      alert("Error:" + _error13.code + " " + _error13.message);
 	    }
 	  });
 	}
@@ -27459,8 +27491,8 @@
 	    success: function success(results) {
 	      return results;
 	    },
-	    error: function error(_error13) {
-	      alert("Error:" + _error13.code + " " + _error13.message);
+	    error: function error(_error14) {
+	      alert("Error:" + _error14.code + " " + _error14.message);
 	    }
 	  });
 	}
@@ -64938,6 +64970,14 @@
 	
 	var _ParseActions = __webpack_require__(240);
 	
+	var _parse = __webpack_require__(241);
+	
+	var _parse2 = _interopRequireDefault(_parse);
+	
+	var _parseReact = __webpack_require__(370);
+	
+	var _parseReact2 = _interopRequireDefault(_parseReact);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -64963,21 +65003,27 @@
 	    _this.handleHeartClick = _this.handleHeartClick.bind(_this);
 	    _this.loadComments = _this.loadComments.bind(_this);
 	    _this.addComment = _this.addComment.bind(_this);
+	    _this.setAnimation = _this.setAnimation.bind(_this);
 	    return _this;
 	  }
 	
 	  _createClass(PostEntry, [{
 	    key: 'componentDidMount',
 	    value: function componentDidMount() {
+	      var _this2 = this;
+	
 	      this.loadComments();
+	      (0, _ParseActions.findPost)(this.props.postData.id).then(function (resp) {
+	        _this2.setAnimation(resp);
+	      });
 	    }
 	  }, {
 	    key: 'loadComments',
 	    value: function loadComments() {
-	      var _this2 = this;
+	      var _this3 = this;
 	
 	      (0, _ParseActions.queryForComments)(this.props.postData.id).then(function (comments) {
-	        _this2.setState({ comments: comments });
+	        _this3.setState({ comments: comments });
 	      });
 	    }
 	  }, {
@@ -64985,7 +65031,6 @@
 	    value: function addComment(comment) {
 	      var comments = this.state.comments;
 	      comments.push(comment);
-	      console.log(comments);
 	      this.setState({ comments: comments });
 	    }
 	  }, {
@@ -65004,6 +65049,18 @@
 	          likesCount: this.state.likesCount - 1
 	        });
 	      }
+	    }
+	  }, {
+	    key: 'setAnimation',
+	    value: function setAnimation(resp) {
+	      var currentUserName = _parse2.default.User.current().get("name");
+	      var post = resp[0];
+	      var likes = post.get('uplikes');
+	      if (~likes.indexOf(currentUserName)) {
+	        this.setState({ animate: 'heartAnimation' });
+	        return;
+	      }
+	      this.setState({ animate: '' });
 	    }
 	  }, {
 	    key: 'renderAttachmentSection',

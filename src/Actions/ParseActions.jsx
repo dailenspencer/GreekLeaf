@@ -39,7 +39,6 @@ export function queryForGroups(){
   var query = new Parse.Query(groups);
   return query.find({
     success: function(results){
-      console.log('results',results);
       return results;
     },
     error: function(error){
@@ -178,12 +177,44 @@ export function saveComment(text, postId){
 }
 
 export function saveLike(postId) {
-  var currentUser = Parse.User.current();
-  var query = Parse.Object.extend("Posts");
+  var currentUserName = Parse.User.current().get("name");
+  var query = new Parse.Query("Posts");
   query.equalTo("objectId", postId);
   return query.find({
-    success: function(post){
-      console.log(post, "post")
+    success: function(results){
+      var post = results[0];
+      var likes = post.get('uplikes');
+      if(~likes.indexOf(currentUserName)){
+        likes = removeFromLikes(likes, currentUserName);
+        post.set('likes', likes);
+        post.save();
+        return;
+      } 
+      likes.push(currentUserName);
+      post.set('likes', likes);
+      post.save();
+    },
+    error: function(error) {
+      alert("Error:" + error.code + " " + error.message);
+    }
+  })
+}
+
+function removeFromLikes(likes,name){
+  var index = likes.indexOf(name);
+  if (index > -1) {
+    likes.splice(index, 1);
+  }
+  return likes;
+}
+
+export function findPost(postId){
+  var currentUserName = Parse.User.current().get("name");
+  var query = new Parse.Query("Posts");
+  query.equalTo("objectId", postId);
+  return query.find({
+    success: function(results){
+      return results;
     },
     error: function(error) {
       alert("Error:" + error.code + " " + error.message);

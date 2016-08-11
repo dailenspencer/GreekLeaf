@@ -6,7 +6,10 @@ import $ from 'jquery';
 import classnames from 'classnames';
 import moment from 'moment';
 import {createMaterialAvatar, postEntryInitialAvatar} from '../../../Helpers/RenderHelpers';
-import {queryForComments, saveLike} from '../../../Actions/ParseActions';
+import {queryForComments, findPost, saveLike} from '../../../Actions/ParseActions';
+
+import Parse from 'parse';
+import ParseReact from 'parse-react';
 
 export default class PostEntry extends React.Component {
   constructor(props){
@@ -20,10 +23,14 @@ export default class PostEntry extends React.Component {
     this.handleHeartClick = this.handleHeartClick.bind(this);
     this.loadComments = this.loadComments.bind(this);
     this.addComment = this.addComment.bind(this);
+    this.setAnimation = this.setAnimation.bind(this);
   }
 
   componentDidMount(){
     this.loadComments();
+    findPost(this.props.postData.id).then((resp) => {
+      this.setAnimation(resp);
+    })
   }
 
   loadComments(){
@@ -35,7 +42,6 @@ export default class PostEntry extends React.Component {
   addComment(comment){
     var comments = this.state.comments;
     comments.push(comment);
-    console.log(comments);
     this.setState({comments: comments});
   }
 
@@ -53,6 +59,17 @@ export default class PostEntry extends React.Component {
         likesCount: this.state.likesCount - 1
       })
     }
+  }
+
+  setAnimation(resp){
+    var currentUserName = Parse.User.current().get("name");
+    var post = resp[0];
+    var likes = post.get('uplikes');
+    if(~likes.indexOf(currentUserName)){
+      this.setState({animate: 'heartAnimation'})
+      return;
+    } 
+    this.setState({animate: ''})
   }
 
   renderAttachmentSection(attachments){
