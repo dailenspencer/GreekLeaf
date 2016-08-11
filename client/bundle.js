@@ -43817,6 +43817,10 @@
 					'fontFamily': 'Raleway',
 					'fontWeight': '200'
 				};
+				var errorStyle = {
+					'color': 'white'
+				};
+	
 				return _react2.default.createElement(
 					'div',
 					{ id: 'LoginForm' },
@@ -43860,6 +43864,7 @@
 								type: 'Password',
 								errorText: this.state.errorText,
 								hintStyle: hintStyle,
+								errorStyle: errorStyle,
 								inputStyle: {
 									'autoComplete': 'off',
 									'color': 'white',
@@ -52657,6 +52662,10 @@
 					'color': 'white'
 				};
 	
+				var errorStyle = {
+					'color': 'white'
+				};
+	
 				var inputStyle = {
 					'autoComplete': 'off',
 					'color': 'white',
@@ -52694,6 +52703,7 @@
 								hintStyle: hintStyle,
 								style: style,
 								inputStyle: inputStyle,
+								errorStyle: errorStyle,
 								onChange: this.validateNameField,
 								errorText: this.state.nameErrorText
 							})
@@ -52706,6 +52716,7 @@
 								hintStyle: hintStyle,
 								style: style,
 								inputStyle: inputStyle,
+								errorStyle: errorStyle,
 								onChange: this.validateEmailField,
 								errorText: this.state.emailErrorText
 							})
@@ -52718,6 +52729,7 @@
 								hintStyle: hintStyle,
 								style: style,
 								inputStyle: inputStyle,
+								errorStyle: errorStyle,
 								onChange: this.validatePhoneField,
 								errorText: this.state.phoneErrorText
 							})
@@ -52730,6 +52742,7 @@
 								hintStyle: hintStyle,
 								style: style,
 								inputStyle: inputStyle,
+								errorStyle: errorStyle,
 								onChange: this.validateFirstPasswordField,
 								errorText: this.state.firstPasswordErrorText
 							})
@@ -52742,6 +52755,7 @@
 								hintStyle: hintStyle,
 								style: style,
 								inputStyle: inputStyle,
+								errorStyle: errorStyle,
 								onChange: this.validateSecondPasswordField,
 								errorText: this.state.secondPasswordErrorText
 							})
@@ -63547,11 +63561,13 @@
 	  }, {
 	    key: 'showLoader',
 	    value: function showLoader() {
+	      console.log('show loader');
 	      this.setState({ loaderVisibility: 'visible' });
 	    }
 	  }, {
 	    key: 'hideLoader',
 	    value: function hideLoader() {
+	      console.log('hide loader');
 	      this.setState({ loaderVisibility: 'hidden' });
 	    }
 	  }, {
@@ -63561,10 +63577,10 @@
 	
 	      this.showLoader();
 	      (0, _ParseActions.savePost)(text, this.state.files).then(function (resp) {
-	        _this3.addPost(resp);
 	        _this3.hideLoader();
 	        _this3.clearTextArea();
 	        _this3.removeDropzoneFiles();
+	        _this3.addPost(resp);
 	      });
 	    }
 	  }, {
@@ -65013,6 +65029,7 @@
 	      var _this2 = this;
 	
 	      this.loadComments();
+	      console.log('component did mount');
 	      (0, _ParseActions.findPost)(this.props.postData.id).then(function (resp) {
 	        _this2.setAnimation(resp);
 	      });
@@ -75506,7 +75523,7 @@
 	        var text = e.target.value;
 	        (0, _ParseActions.saveComment)(text, this.props.postId).then(function (resp) {
 	          _this2.props.addComment(resp);
-	          (0, _jquery2.default)('#CommentCreatorInput').val("");
+	          (0, _jquery2.default)('.CommentCreatorInput').val("");
 	        });
 	      }
 	    }
@@ -75532,7 +75549,7 @@
 	          { id: 'CommentCreatorAvatar' },
 	          avatar
 	        ),
-	        _react2.default.createElement('textarea', { rows: '3', cols: '26', type: 'text', id: 'CommentCreatorInput', placeholder: 'Write a comment...', onKeyPress: this.handleKeyPress.bind(this), onFocus: this.handleOnFocus, onBlur: this.handleOnBlur, style: { 'height': '50px' } })
+	        _react2.default.createElement('textarea', { rows: '3', cols: '26', type: 'text', className: 'CommentCreatorInput', placeholder: 'Write a comment...', onKeyPress: this.handleKeyPress.bind(this), onFocus: this.handleOnFocus, onBlur: this.handleOnBlur, style: { 'height': '50px' } })
 	      );
 	    }
 	  }]);

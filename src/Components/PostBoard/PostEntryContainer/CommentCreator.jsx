@@ -31,7 +31,7 @@ export default class CommentCreator extends React.Component {
       const text = e.target.value
       saveComment(text,this.props.postId).then((resp) => {
         this.props.addComment(resp);
-        $('#CommentCreatorInput').val("");
+        $('.CommentCreatorInput').val("");
       })
     }
   }
@@ -54,7 +54,7 @@ export default class CommentCreator extends React.Component {
         <div id="CommentCreatorAvatar">
           {avatar}
         </div>
-        <textarea rows="3" cols="26" type="text" id="CommentCreatorInput" placeholder="Write a comment..." onKeyPress={this.handleKeyPress.bind(this)} onFocus={this.handleOnFocus} onBlur={this.handleOnBlur} style={{'height':'50px'}}></textarea>
+        <textarea rows="3" cols="26" type="text" className="CommentCreatorInput" placeholder="Write a comment..." onKeyPress={this.handleKeyPress.bind(this)} onFocus={this.handleOnFocus} onBlur={this.handleOnBlur} style={{'height':'50px'}}></textarea>
       </div>
     );
 

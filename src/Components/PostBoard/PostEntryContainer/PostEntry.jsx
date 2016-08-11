@@ -28,6 +28,7 @@ export default class PostEntry extends React.Component {
 
   componentDidMount(){
     this.loadComments();
+    console.log('component did mount');
     findPost(this.props.postData.id).then((resp) => {
       this.setAnimation(resp);
     })

@@ -155,7 +155,7 @@ Comments
   padding-left: 5px;
 }
 
-#CommentCreatorInput {
+.CommentCreatorInput {
   display: inline-block;
   vertical-align: top;
   padding:20px 0px 0 10px;
@@ -173,7 +173,7 @@ Comments
   background-color: transparent;
 }
 
-#CommentCreatorInput:focus {
+.CommentCreatorInput:focus {
   outline:0;
 }
 

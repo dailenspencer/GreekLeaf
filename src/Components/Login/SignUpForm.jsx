@@ -163,6 +163,10 @@ export default class SignUpForm extends React.Component{
 			'color':'white'
 		}
 
+		const errorStyle = {
+			'color':'white'
+		}
+
 		const inputStyle = {
 				'autoComplete':'off',
 				'color': 'white',
@@ -191,6 +195,7 @@ export default class SignUpForm extends React.Component{
 			                hintStyle={hintStyle}
 			                style={style}
 			                inputStyle={inputStyle}
+			                errorStyle={errorStyle}
 			                onChange={this.validateNameField}
 			                errorText={this.state.nameErrorText}
 			              />
@@ -201,6 +206,7 @@ export default class SignUpForm extends React.Component{
 			                hintStyle={hintStyle}
 			                style={style}
 			                inputStyle={inputStyle}
+			                errorStyle={errorStyle}
 			                onChange={this.validateEmailField}
 			                errorText={this.state.emailErrorText}
 			              />
@@ -211,6 +217,7 @@ export default class SignUpForm extends React.Component{
 			                hintStyle={hintStyle}
 			                style={style}
 			                inputStyle={inputStyle}
+			                errorStyle={errorStyle}
 			                onChange={this.validatePhoneField}
 			                errorText={this.state.phoneErrorText}
 			              />
@@ -221,6 +228,7 @@ export default class SignUpForm extends React.Component{
 			                hintStyle={hintStyle}
 			                style={style}
 			                inputStyle={inputStyle}
+			                errorStyle={errorStyle}
 			                onChange={this.validateFirstPasswordField}
 			                errorText={this.state.firstPasswordErrorText}
 			              />
@@ -231,6 +239,7 @@ export default class SignUpForm extends React.Component{
 			                hintStyle={hintStyle}
 			                style={style}
 			                inputStyle={inputStyle}
+			                errorStyle={errorStyle}
 			                onChange={this.validateSecondPasswordField}
 			                errorText={this.state.secondPasswordErrorText}
 			              />
