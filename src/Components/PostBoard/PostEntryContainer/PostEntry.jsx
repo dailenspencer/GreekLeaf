@@ -26,9 +26,10 @@ export default class PostEntry extends React.Component {
     this.setAnimation = this.setAnimation.bind(this);
   }
 
-  componentDidMount(){
+
+  componentWillMount(){
+    console.log('component will mount');
     this.loadComments();
-    console.log('component did mount');
     findPost(this.props.postData.id).then((resp) => {
       this.setAnimation(resp);
     })
@@ -75,7 +76,9 @@ export default class PostEntry extends React.Component {
 
   renderAttachmentSection(attachments){
     var attachmentList = attachments.map((attachment, index) => {
-
+      Parse.Cloud.httpRequest({ url: profilePhoto.url() }).then(function(response) {
+        console.log(response.buffer);
+      });
       return (
         <div className="Attachment" key={index}>
           <a href={attachment.url()} target="_blank">{attachment.url()}</a>

@@ -135,6 +135,7 @@ export function savePost(text, files){
   newPost.set("executive", false);
 
   var parseFiles = files.map(function(file){
+    console.log(file);
     return new Parse.File("file", file, "image/png");
   })
 

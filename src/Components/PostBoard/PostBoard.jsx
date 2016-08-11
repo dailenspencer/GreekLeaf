@@ -43,17 +43,14 @@ export default class PostBoard extends React.Component {
   }
 
   showLoader(){
-    console.log('show loader');
     this.setState({loaderVisibility:'visible'})
   }
 
   hideLoader(){
-    console.log('hide loader');
     this.setState({loaderVisibility:'hidden'})
   }
 
   handlePost(text){
-
     this.showLoader()
     savePost(text, this.state.files).then((resp) => {
       this.hideLoader();

@@ -27344,6 +27344,7 @@
 	  newPost.set("executive", false);
 	
 	  var parseFiles = files.map(function (file) {
+	    console.log(file);
 	    return new _parse2.default.File("file", file, "image/png");
 	  });
 	
@@ -63561,13 +63562,11 @@
 	  }, {
 	    key: 'showLoader',
 	    value: function showLoader() {
-	      console.log('show loader');
 	      this.setState({ loaderVisibility: 'visible' });
 	    }
 	  }, {
 	    key: 'hideLoader',
 	    value: function hideLoader() {
-	      console.log('hide loader');
 	      this.setState({ loaderVisibility: 'hidden' });
 	    }
 	  }, {
@@ -65024,12 +65023,12 @@
 	  }
 	
 	  _createClass(PostEntry, [{
-	    key: 'componentDidMount',
-	    value: function componentDidMount() {
+	    key: 'componentWillMount',
+	    value: function componentWillMount() {
 	      var _this2 = this;
 	
+	      console.log('component will mount');
 	      this.loadComments();
-	      console.log('component did mount');
 	      (0, _ParseActions.findPost)(this.props.postData.id).then(function (resp) {
 	        _this2.setAnimation(resp);
 	      });
@@ -65083,7 +65082,9 @@
 	    key: 'renderAttachmentSection',
 	    value: function renderAttachmentSection(attachments) {
 	      var attachmentList = attachments.map(function (attachment, index) {
-	
+	        _parse2.default.Cloud.httpRequest({ url: profilePhoto.url() }).then(function (response) {
+	          console.log(response.buffer);
+	        });
 	        return _react2.default.createElement(
 	          'div',
 	          { className: 'Attachment', key: index },
