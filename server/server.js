@@ -37,6 +37,9 @@ app.get('/*', function(req,res){
   res.sendFile(path.resolve('client', 'index.html'));
 })
 
+app.get('/', function(req,res){
+  res.sendFile(path.resolve('client', 'index.html'));
+})
 
 app.get('/Home', function(req,res){
 	res.sendFile(path.resolve('../client/index.html'));
