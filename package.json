@@ -4,13 +4,6 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "karma start",
-    "watch:test": "karma start --auto-watch --no-single-run",
-    "validate": "npm-run-all --parallel validate-webpack:* lint test --serial check-",
-    "validate-webpack:dev": "webpack-validator webpack.config.js --env.dev",
-    "validate-webpack:prod": "webpack-validator webpack.config.js --env.prod",
-    "clean-and-copy": "npm run clean-dist && npm run copy-files",
-    "prestart": "npm run clean-and-copy",
     "start": "webpack-dev-server --env.dev --content-base dist --watch",
     "build": "webpack --env.dev --watch",
     "build:prod": "webpack --env.prod -p",
@@ -19,7 +12,7 @@
     "dev": "concurrently --kill-others \"npm run webpack-watch\" \"npm run express-server\"",
     "lint": "eslint .",
     "serve": "nodemon ./server/server.js",
-    "start": "node ./server/server.js"
+    "start": "node ./server/server.js",
   },
   "author": "",
   "license": "ISC",
