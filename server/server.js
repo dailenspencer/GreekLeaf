@@ -20,7 +20,7 @@ app.use(express.static(__dirname + '/../client/public'));
 
 
 
-var server = app.listen(8084, function() {
+var server = app.listen(process.env.Port || 8084, function() {
 
     var host = server.address().address
     var port = server.address().port

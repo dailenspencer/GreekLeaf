@@ -18,7 +18,8 @@
     "express-server": "nodemon ./server/server.js",
     "dev": "concurrently --kill-others \"npm run webpack-watch\" \"npm run express-server\"",
     "lint": "eslint .",
-    "serve": "nodemon ./server/server.js"
+    "serve": "nodemon ./server/server.js",
+    "start": "node ./server/server.js"
   },
   "author": "",
   "license": "ISC",
