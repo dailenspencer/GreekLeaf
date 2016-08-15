@@ -65027,7 +65027,6 @@
 	    value: function componentWillMount() {
 	      var _this2 = this;
 	
-	      console.log('component will mount');
 	      this.loadComments();
 	      (0, _ParseActions.findPost)(this.props.postData.id).then(function (resp) {
 	        _this2.setAnimation(resp);
@@ -65082,9 +65081,9 @@
 	    key: 'renderAttachmentSection',
 	    value: function renderAttachmentSection(attachments) {
 	      var attachmentList = attachments.map(function (attachment, index) {
-	        _parse2.default.Cloud.httpRequest({ url: profilePhoto.url() }).then(function (response) {
-	          console.log(response.buffer);
-	        });
+	        // Parse.Cloud.httpRequest({ url: profilePhoto.url() }).then(function(response) {
+	        //   console.log(response.buffer);
+	        // });
 	        return _react2.default.createElement(
 	          'div',
 	          { className: 'Attachment', key: index },
