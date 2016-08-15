@@ -29,17 +29,10 @@ var server = app.listen(process.env.PORT || 8084, function() {
 
 })
 
-app.get('*', function(req,res){
-  res.sendFile(path.resolve('client', 'index.html'));
-})
-
 app.get('/*', function(req,res){
   res.sendFile(path.resolve('client', 'index.html'));
 })
 
-app.get('/', function(req,res){
-  res.sendFile(path.resolve('client', 'index.html'));
-})
 
 app.get('/Home', function(req,res){
 	res.sendFile(path.resolve('../client/index.html'));
