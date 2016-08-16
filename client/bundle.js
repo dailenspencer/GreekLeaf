@@ -64901,14 +64901,23 @@
 	
 	    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(PostEntryContainer).call(this, props));
 	
-	    _this.state = {};
+	    _this.state = {
+	      postElements: ''
+	    };
 	    return _this;
 	  }
 	
 	  _createClass(PostEntryContainer, [{
+	    key: 'componentDidReceiveProps',
+	    value: function componentDidReceiveProps(nextProps) {
+	      console.log('did receive props');
+	      console.log(nextProps);
+	    }
+	  }, {
 	    key: 'createPostElements',
 	    value: function createPostElements(posts) {
 	      var postElements = posts.map(function (post, index) {
+	        console.log(post.id, "post id");
 	        var attachments = post.get("Attachments") ? post.get("Attachments") : [];
 	        var postData = {
 	          author: post.get("Author"),
@@ -64985,6 +64994,10 @@
 	
 	var _ParseActions = __webpack_require__(240);
 	
+	var _HeartButton = __webpack_require__(845);
+	
+	var _HeartButton2 = _interopRequireDefault(_HeartButton);
+	
 	var _parse = __webpack_require__(241);
 	
 	var _parse2 = _interopRequireDefault(_parse);
@@ -65010,35 +65023,27 @@
 	    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(PostEntry).call(this, props));
 	
 	    _this.state = {
-	      animate: '',
 	      likesCount: _this.props.postData.likes.length,
 	      comments: []
 	    };
-	
-	    _this.handleHeartClick = _this.handleHeartClick.bind(_this);
 	    _this.loadComments = _this.loadComments.bind(_this);
 	    _this.addComment = _this.addComment.bind(_this);
-	    _this.setAnimation = _this.setAnimation.bind(_this);
+	    _this.changeLikeCount = _this.changeLikeCount.bind(_this);
 	    return _this;
 	  }
 	
 	  _createClass(PostEntry, [{
 	    key: 'componentWillMount',
 	    value: function componentWillMount() {
-	      var _this2 = this;
-	
 	      this.loadComments();
-	      (0, _ParseActions.findPost)(this.props.postData.id).then(function (resp) {
-	        _this2.setAnimation(resp);
-	      });
 	    }
 	  }, {
 	    key: 'loadComments',
 	    value: function loadComments() {
-	      var _this3 = this;
+	      var _this2 = this;
 	
 	      (0, _ParseActions.queryForComments)(this.props.postData.id).then(function (comments) {
-	        _this3.setState({ comments: comments });
+	        _this2.setState({ comments: comments });
 	      });
 	    }
 	  }, {
@@ -65049,33 +65054,13 @@
 	      this.setState({ comments: comments });
 	    }
 	  }, {
-	    key: 'handleHeartClick',
-	    value: function handleHeartClick() {
-	      if (this.state.animate === '') {
-	        (0, _ParseActions.saveLike)(this.props.postData.id);
-	        this.setState({
-	          animate: 'heartAnimation',
-	          likesCount: this.state.likesCount + 1
-	        });
-	      } else {
-	        (0, _ParseActions.saveLike)(this.props.postData.id);
-	        this.setState({
-	          animate: '',
-	          likesCount: this.state.likesCount - 1
-	        });
-	      }
-	    }
-	  }, {
-	    key: 'setAnimation',
-	    value: function setAnimation(resp) {
-	      var currentUserName = _parse2.default.User.current().get("name");
-	      var post = resp[0];
-	      var likes = post.get('uplikes');
-	      if (~likes.indexOf(currentUserName)) {
-	        this.setState({ animate: 'heartAnimation' });
+	    key: 'changeLikeCount',
+	    value: function changeLikeCount(like) {
+	      if (like) {
+	        this.setState({ likesCount: this.state.likesCount + 1 });
 	        return;
 	      }
-	      this.setState({ animate: '' });
+	      this.setState({ likesCount: this.state.likesCount - 1 });
 	    }
 	  }, {
 	    key: 'renderAttachmentSection',
@@ -65090,7 +65075,8 @@
 	          _react2.default.createElement(
 	            'a',
 	            { href: attachment.url(), target: '_blank' },
-	            attachment.url()
+	            'Attachment #',
+	            index + 1
 	          )
 	        );
 	      });
@@ -65151,8 +65137,8 @@
 	        attachments.length ? this.renderAttachmentSection(attachments) : '',
 	        _react2.default.createElement(
 	          'div',
-	          { id: 'PostEntryActionBar' },
-	          _react2.default.createElement('div', { className: heartClasses, onClick: this.handleHeartClick }),
+	          { className: 'PostEntryActionBar' },
+	          _react2.default.createElement(_HeartButton2.default, { key: this.props.postData.id, postData: this.props.postData, changeLikeCount: this.changeLikeCount }),
 	          _react2.default.createElement(
 	            'div',
 	            { className: 'Likes' },
@@ -98833,6 +98819,106 @@
 	  onRightClick: 'rightclick'
 	};
 	module.exports = exports['default'];
+
+/***/ },
+/* 845 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(2);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _ParseActions = __webpack_require__(240);
+	
+	var _parse = __webpack_require__(241);
+	
+	var _parse2 = _interopRequireDefault(_parse);
+	
+	var _parseReact = __webpack_require__(370);
+	
+	var _parseReact2 = _interopRequireDefault(_parseReact);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var HeartButton = function (_React$Component) {
+	  _inherits(HeartButton, _React$Component);
+	
+	  function HeartButton(props) {
+	    _classCallCheck(this, HeartButton);
+	
+	    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(HeartButton).call(this, props));
+	
+	    _this.state = {
+	      animate: ''
+	    };
+	    return _this;
+	  }
+	
+	  _createClass(HeartButton, [{
+	    key: 'componentWillMount',
+	    value: function componentWillMount() {
+	      var _this2 = this;
+	
+	      (0, _ParseActions.findPost)(this.props.postData.id).then(function (resp) {
+	        _this2.setAnimation(resp);
+	      });
+	    }
+	  }, {
+	    key: 'setAnimation',
+	    value: function setAnimation(resp) {
+	      var currentUserName = _parse2.default.User.current().get("name");
+	      var post = resp[0];
+	      var likes = post.get('uplikes');
+	      if (~likes.indexOf(currentUserName)) {
+	
+	        this.setState({ animate: 'heartAnimation' });
+	        return;
+	      }
+	      this.setState({ animate: '' });
+	    }
+	  }, {
+	    key: 'handleHeartClick',
+	    value: function handleHeartClick() {
+	      console.log('handle heart click');
+	      if (this.state.animate === '') {
+	        (0, _ParseActions.saveLike)(this.props.postData.id);
+	        this.setState({
+	          animate: 'heartAnimation'
+	        });
+	        this.props.changeLikeCount(true);
+	      } else {
+	        (0, _ParseActions.saveLike)(this.props.postData.id);
+	        this.setState({
+	          animate: ''
+	        });
+	        this.props.changeLikeCount(false);
+	      }
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      return _react2.default.createElement('div', { className: 'heart ' + this.state.animate, onClick: this.handleHeartClick.bind(this) });
+	    }
+	  }]);
+	
+	  return HeartButton;
+	}(_react2.default.Component);
+	
+	exports.default = HeartButton;
 
 /***/ }
 /******/ ]);

@@ -6,32 +6,27 @@ import $ from 'jquery';
 import classnames from 'classnames';
 import moment from 'moment';
 import {createMaterialAvatar, postEntryInitialAvatar} from '../../../Helpers/RenderHelpers';
-import {queryForComments, findPost, saveLike} from '../../../Actions/ParseActions';
+import {queryForComments} from '../../../Actions/ParseActions';
+import HeartButton from './HeartButton'
 
 import Parse from 'parse';
 import ParseReact from 'parse-react';
 
 export default class PostEntry extends React.Component {
   constructor(props){
-  	super(props);
-  	this.state = {
-  	 animate: '',
+    super(props);
+    this.state = {
      likesCount: this.props.postData.likes.length,
      comments: []
-  	}
-
-    this.handleHeartClick = this.handleHeartClick.bind(this);
+    }
     this.loadComments = this.loadComments.bind(this);
     this.addComment = this.addComment.bind(this);
-    this.setAnimation = this.setAnimation.bind(this);
+    this.changeLikeCount = this.changeLikeCount.bind(this);
   }
 
 
   componentWillMount(){
     this.loadComments();
-    findPost(this.props.postData.id).then((resp) => {
-      this.setAnimation(resp);
-    })
   }
 
   loadComments(){
@@ -41,37 +36,20 @@ export default class PostEntry extends React.Component {
   }
 
   addComment(comment){
-    var comments = this.state.comments;
-    comments.push(comment);
-    this.setState({comments: comments});
+    var comments = this.state.comments
+    comments.push(comment)
+    this.setState({comments: comments})
   }
 
-  handleHeartClick(){
-    if(this.state.animate === ''){
-      saveLike(this.props.postData.id);
-      this.setState({
-        animate:'heartAnimation',
-        likesCount: this.state.likesCount + 1
-      })
-    } else {
-      saveLike(this.props.postData.id);
-      this.setState({
-        animate:'',
-        likesCount: this.state.likesCount - 1
-      })
-    }
-  }
-
-  setAnimation(resp){
-    var currentUserName = Parse.User.current().get("name");
-    var post = resp[0];
-    var likes = post.get('uplikes');
-    if(~likes.indexOf(currentUserName)){
-      this.setState({animate: 'heartAnimation'})
+  changeLikeCount(like){
+    if(like){
+      this.setState({likesCount: this.state.likesCount + 1})
       return;
-    } 
-    this.setState({animate: ''})
+    }
+    this.setState({likesCount: this.state.likesCount -1})
   }
+
+
 
   renderAttachmentSection(attachments){
     var attachmentList = attachments.map((attachment, index) => {
@@ -80,7 +58,7 @@ export default class PostEntry extends React.Component {
       // });
       return (
         <div className="Attachment" key={index}>
-          <a href={attachment.url()} target="_blank">{attachment.url()}</a>
+          <a href={attachment.url()} target="_blank">Attachment #{index + 1}</a>
         </div>
       )
     })
@@ -126,9 +104,8 @@ render() {
         </div>
         <p id="PostEntryMessage">{message}</p>
         { attachments.length ? this.renderAttachmentSection(attachments) : '' }
-        <div id="PostEntryActionBar">
-          <div className={heartClasses} onClick={this.handleHeartClick}>
-          </div>
+        <div className="PostEntryActionBar">
+          <HeartButton key={this.props.postData.id} postData={this.props.postData} changeLikeCount={this.changeLikeCount}/>
           <div className="Likes">{likesCount}</div>
         </div>
         <CommentSection postId={this.props.postData.id} comments={this.state.comments} addComment={this.addComment} key={this.props.postData.id}/>

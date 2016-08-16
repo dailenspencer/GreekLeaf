@@ -5,12 +5,18 @@ export default class PostEntryContainer extends React.Component {
   constructor(props){
   	super(props);
   	this.state = {
-
+      postElements : ''
   	}
   }
 
+  componentDidReceiveProps(nextProps){
+    console.log('did receive props');
+    console.log(nextProps);
+  }
+
   createPostElements(posts){
-    var postElements = posts.map(function(post, index){
+    var postElements = posts.map((post, index) => {
+    console.log(post.id, "post id");
     var attachments = post.get("Attachments") ? post.get("Attachments") : []
     var postData = {
         author : post.get("Author"),
