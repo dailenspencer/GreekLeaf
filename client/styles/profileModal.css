@@ -1,0 +1,75 @@
+.ProfileModal {
+	width: 500px;
+	background-color: rgba(0,0,0,0.7);
+	height:400px;
+	bottom: -400px;
+	left:50%;
+	position: fixed;
+	transform: translateX(-50%);
+	border-radius: 5px;
+}
+
+.ProfileModalTop {
+	display: flex;
+	flex-direction: row;
+	height: 150px;
+}
+
+.ProfileModalImage {
+	width: 130px;
+	height: 130px;
+	border-radius: 100%;
+	margin-top: 10px;
+	margin-left: 10px;
+}
+
+.ProfileModalTopRight {
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+	justify-content: center;
+	align-items: center;
+}
+
+.ProfileModalName {
+	font-family: 'Raleway', sans-serif;
+	font-weight: 300;
+	color: white;
+	font-size: 30px;
+	height: 50px;
+}
+
+.ProfileModalInfoBox {
+	display: flex;
+	flex-direction: column;
+	height: 200px;
+	justify-content: space-between;
+	align-items: center;
+	color: white;
+	font-family: 'Raleway', sans-serif;
+	font-weight: 300;
+	color: white;
+	font-size: 15px;
+}
+
+.CancelProfileModalButton {
+	position: absolute;
+	bottom: 5px;
+	left:50%;
+	transform: translateX(-50%);
+	width: 40px;
+	height: 40px;
+	background-color: transparent;
+	border:none;	
+	cursor: pointer;
+	width: 100%;
+}
+
+.CancelProfileModalButton:focus {
+	outline: none;
+}
+
+.cancelProfileModalButtonImage {
+	width: 30px;
+	height: 30px;
+}

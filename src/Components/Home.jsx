@@ -1,13 +1,14 @@
-import React from 'react';
-import Nav from './Nav';
-import PostBoard from './PostBoard/PostBoard';
-import Messenger from './Messenger/Messenger';
-import Directory from './Directory/Directory';
-import FoodMenu from './FoodMenu/FoodMenu';
-import PledgeTrack from './PledgeTrack/PledgeTrack';
+import React from 'react'
+import Nav from './Nav'
+import PostBoard from './PostBoard/PostBoard'
+import Messenger from './Messenger/Messenger'
+import Directory from './Directory/Directory'
+import FoodMenu from './FoodMenu/FoodMenu'
+import PledgeTrack from './PledgeTrack/PledgeTrack'
+import ProfileModal from './ProfileModal/ProfileModal'
 
-import Parse from 'parse';
-import ParseReact from 'parse-react';
+import Parse from 'parse'
+import ParseReact from 'parse-react'
 
 
 
@@ -55,6 +56,7 @@ export default class Home extends React.Component {
       <div style={{'height':'100%'}}>
       	<Nav renderNewSection={this.renderNewSection}/>
       	{this.state.visibleComponent}
+        <ProfileModal/>
       </div>
     );
 

@@ -84,8 +84,9 @@ export default class PostBoard extends React.Component {
 
   removeDropzoneFiles(){
     this.state.dropzone.removeAllFiles();
-
   }
+
+  
 
 
   render() {
