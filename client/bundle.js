@@ -57565,7 +57565,7 @@
 	
 	var _PledgeTrack2 = _interopRequireDefault(_PledgeTrack);
 	
-	var _ProfileModal = __webpack_require__(848);
+	var _ProfileModal = __webpack_require__(847);
 	
 	var _ProfileModal2 = _interopRequireDefault(_ProfileModal);
 	
@@ -64999,7 +64999,7 @@
 	
 	var _RenderHelpers = __webpack_require__(653);
 	
-	var _AnimationHelpers = __webpack_require__(847);
+	var _AnimationHelpers = __webpack_require__(767);
 	
 	var _HeartButton = __webpack_require__(768);
 	
@@ -89911,7 +89911,47 @@
 	}));
 
 /***/ },
-/* 767 */,
+/* 767 */
+/***/ function(module, exports) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+	exports.showProfileModal = showProfileModal;
+	exports.hideProfileModal = hideProfileModal;
+	function showProfileModal(postData) {
+		var author = postData.author;
+		var profilePicture = author.get('ProfilePicture');
+		var name = author.get('name');
+		var phoneNumber = author.get('phonenumber');
+		var email = author.get('email');
+		var address = author.get('address');
+		var year = author.get('year');
+		var major = author.get('major');
+		var company = author.get('company');
+	
+		$('.ProfileModalImage').attr('src', profilePicture.url());
+		$('.ProfileModalInfoName').text(name);
+		$('.ProfileModalInfoPhone').text(phoneNumber);
+		$('.ProfileModalInfoEmail').text(email);
+		$('.ProfileModalInfoAddress').text(address);
+		$('.ProfileModalInfoYear').text(year);
+		$('.ProfileModalInfoMajor').text(major);
+		$('.ProfileModalInfoCompany').text(company);
+	
+		$('.ProfileModal').addClass('animateUp');
+		$('.ProfileModal').removeClass('animateDown');
+	}
+	
+	function hideProfileModal() {
+		console.log('hide profile modal');
+		$('.ProfileModal').addClass('animateDown');
+		$('.ProfileModal').removeClass('animateUp');
+	}
+
+/***/ },
 /* 768 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -98935,31 +98975,6 @@
 
 /***/ },
 /* 847 */
-/***/ function(module, exports) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-		value: true
-	});
-	exports.showProfileModal = showProfileModal;
-	exports.hideProfileModal = hideProfileModal;
-	function showProfileModal(postData) {
-		var author = postData.author;
-		var name = author.get('name');
-	
-		$('.ProfileModal').addClass('animateUp');
-		$('.ProfileModal').removeClass('animateDown');
-	}
-	
-	function hideProfileModal() {
-		console.log('hide profile modal');
-		$('.ProfileModal').addClass('animateDown');
-		$('.ProfileModal').removeClass('animateUp');
-	}
-
-/***/ },
-/* 848 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -98982,7 +98997,7 @@
 	
 	var _RaisedButton2 = _interopRequireDefault(_RaisedButton);
 	
-	var _AnimationHelpers = __webpack_require__(847);
+	var _AnimationHelpers = __webpack_require__(767);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -99025,11 +99040,7 @@
 						_react2.default.createElement(
 							'div',
 							{ className: 'ProfileModalTopRight' },
-							_react2.default.createElement(
-								'h',
-								{ className: 'ProfileModalName' },
-								'Dailen Spencer'
-							),
+							_react2.default.createElement('h', { className: 'ProfileModalInfoName' }),
 							_react2.default.createElement(
 								'div',
 								{ className: 'ProfileModalDirectMessage' },
@@ -99046,32 +99057,32 @@
 						{ className: 'ProfileModalInfoBox' },
 						_react2.default.createElement(
 							'h',
-							null,
+							{ className: 'ProfileModalInfoPhone' },
 							'850-276-9677'
 						),
 						_react2.default.createElement(
 							'h',
-							null,
+							{ className: 'ProfileModalInfoEmail' },
 							'dailenspencer@gmail.com'
 						),
 						_react2.default.createElement(
 							'h',
-							null,
+							{ className: 'ProfileModalInfoWork' },
 							'GreekLeaf, LLC'
 						),
 						_react2.default.createElement(
 							'h',
-							null,
+							{ className: 'ProfileModalInfoAddress' },
 							'3516 Dragons Ridge Road'
 						),
 						_react2.default.createElement(
 							'h',
-							null,
+							{ className: 'ProfileModalInfoMajor' },
 							'Software Engineer'
 						),
 						_react2.default.createElement(
 							'h',
-							null,
+							{ className: 'ProfileModalInfoYear' },
 							'2018'
 						)
 					),

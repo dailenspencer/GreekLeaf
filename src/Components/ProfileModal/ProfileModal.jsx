@@ -25,7 +25,7 @@ export default class ProfileModal extends React.Component {
 				<div className="ProfileModalTop">
 					<img className="ProfileModalImage" src="https://avatars2.githubusercontent.com/u/8779656?v=3&s=460"/>
 					<div className="ProfileModalTopRight">
-						<h className="ProfileModalName">Dailen Spencer</h>
+						<h className="ProfileModalInfoName"></h>
 						<div className="ProfileModalDirectMessage">
 							<MuiThemeProvider>
 				            	<RaisedButton label="Direct Message" style={{'width':'200px','left':'200px'}}/>
@@ -34,12 +34,12 @@ export default class ProfileModal extends React.Component {
 					</div>
 				</div>
 				<div className="ProfileModalInfoBox">
-					<h>850-276-9677</h>
-					<h>dailenspencer@gmail.com</h>
-					<h>GreekLeaf, LLC</h>
-					<h>3516 Dragons Ridge Road</h>
-					<h>Software Engineer</h>
-					<h>2018</h>
+					<h className="ProfileModalInfoPhone">850-276-9677</h>
+					<h className="ProfileModalInfoEmail">dailenspencer@gmail.com</h>
+					<h className="ProfileModalInfoWork">GreekLeaf, LLC</h>
+					<h className="ProfileModalInfoAddress">3516 Dragons Ridge Road</h>
+					<h className="ProfileModalInfoMajor">Software Engineer</h>
+					<h className="ProfileModalInfoYear">2018</h>
 				</div>
 				<button className="CancelProfileModalButton" onClick={this.hideProfileModal}>
 					<img className="cancelProfileModalButtonImage" src="Images/downarrow.png"/>
