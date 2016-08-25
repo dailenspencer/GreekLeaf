@@ -16,7 +16,6 @@ export default class PostEntryContainer extends React.Component {
 
   createPostElements(posts){
     var postElements = posts.map((post, index) => {
-    console.log(post.id, "post id");
     var attachments = post.get("Attachments") ? post.get("Attachments") : []
     var postData = {
         author : post.get("Author"),
@@ -35,7 +34,6 @@ export default class PostEntryContainer extends React.Component {
   }
 
   render() {
-    console.log(this.props.posts.length);
     var postElements = this.createPostElements(this.props.posts);
     return (
       <div id="PostEntryContainer">

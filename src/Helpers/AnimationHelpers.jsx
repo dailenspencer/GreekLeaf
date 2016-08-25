@@ -1,7 +1,17 @@
+import {createMaterialAvatar, postEntryInitialAvatar} from './RenderHelpers'
+export function showProfileModal(user){
+	var author = user
 
-export function showProfileModal(postData){
-	var author = postData.author
-	var profilePicture = author.get('ProfilePicture')
+	var profilePictureFile = author.get('ProfilePicture')
+	var avatar;
+	if(profilePictureFile){
+      avatar = profilePictureFile.url()
+    } else {
+      avatar = './Images/user.png'
+    }
+
+
+	
 	var name = author.get('name')
 	var phoneNumber = author.get('phonenumber')
 	var email = author.get('email')
@@ -10,7 +20,7 @@ export function showProfileModal(postData){
 	var major = author.get('major')
 	var company = author.get('company')
 	
-	$('.ProfileModalImage').attr('src', profilePicture.url());
+	$('.ProfileModalImage').attr('src', avatar);
 	$('.ProfileModalInfoName').text(name)
 	$('.ProfileModalInfoPhone').text(phoneNumber)
 	$('.ProfileModalInfoEmail').text(email)
@@ -24,7 +34,6 @@ export function showProfileModal(postData){
 }
 
 export function hideProfileModal(){
-	console.log('hide profile modal')
 	$('.ProfileModal').addClass('animateDown')
 	$('.ProfileModal').removeClass('animateUp')
 

@@ -1,4 +1,5 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react'
+import {showProfileModal} from '../../Helpers/AnimationHelpers'
 
 class DirectoryEntry extends Component{
 	constructor(props){
@@ -14,6 +15,10 @@ class DirectoryEntry extends Component{
 		this.handleMouseOut = this.handleMouseOut.bind(this)
 	}
 
+	handleClick(){
+		console.log(this.props.user, 'user')
+		showProfileModal(this.props.user)
+	}
 
 	refClick(){
 		this.props.handleClick(this.directoryEntry)
@@ -55,7 +60,8 @@ class DirectoryEntry extends Component{
 			<div
 				ref={(ref) => this.directoryEntry = ref}
 				className="DirectoryEntry"
-				onClick={() => this.refClick()}>
+				onClick={this.handleClick.bind(this)}
+			>
 				<div className="DirectoryEntryCircle">
 					<h className={this.state.initialsHeaderClass} onMouseOver={this.handleMouseOver} onMouseOut={this.handleMouseOut}>{this.state.headerText}</h>
 				</div>

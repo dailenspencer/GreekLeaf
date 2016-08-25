@@ -53,7 +53,7 @@ export default class PostEntry extends React.Component {
   }
 
   handlePostEntryAvatarClick(){
-    showProfileModal(this.props.postData)
+    showProfileModal(this.props.postData.author)
   }
 
   

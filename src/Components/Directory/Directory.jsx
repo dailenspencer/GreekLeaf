@@ -25,7 +25,7 @@ const styles = {
 export default class Directory extends React.Component {
 
 	constructor(props) {
-	    super(props);
+	    super(props)
 	    this.state = {
 
 	      slideIndex : 0,
@@ -35,7 +35,6 @@ export default class Directory extends React.Component {
 	      staffMemberDirectoryEntries : ''
 	    };
   		this.createDirectoryEntryElements = this.createDirectoryEntryElements.bind(this)
-  		this.handleClick = this.handleClick.bind(this);
   	}
 
 
@@ -44,42 +43,38 @@ export default class Directory extends React.Component {
   	handleChange = (value) => {
 	    this.setState({
 	      slideIndex: value,
-	    });
-  	};
+	    })
+  	}
 
   	componentDidMount(){
   		
 		queryForMembers("new").then((resp) => {
-	      var newMemberDirectoryEntries = this.createDirectoryEntryElements(resp);
-	      this.setState({newMemberDirectoryEntries: newMemberDirectoryEntries});
+	      var newMemberDirectoryEntries = this.createDirectoryEntryElements(resp)
+	      this.setState({newMemberDirectoryEntries: newMemberDirectoryEntries})
 	    })
 	    queryForMembers("active").then((resp) => {
-	      var activeMemberDirectoryEntries = this.createDirectoryEntryElements(resp);
-	      this.setState({activeMemberDirectoryEntries: activeMemberDirectoryEntries});
+	      var activeMemberDirectoryEntries = this.createDirectoryEntryElements(resp)
+	      this.setState({activeMemberDirectoryEntries: activeMemberDirectoryEntries})
 	    })
 	    queryForMembers("executive").then((resp) => {
-	      var executiveMemberDirectoryEntries = this.createDirectoryEntryElements(resp);
-	      this.setState({executiveMemberDirectoryEntries: executiveMemberDirectoryEntries});
+	      var executiveMemberDirectoryEntries = this.createDirectoryEntryElements(resp)
+	      this.setState({executiveMemberDirectoryEntries: executiveMemberDirectoryEntries})
 	    })
 	    queryForStaff().then((resp) => {
-					var staffMemberDirectoryEntries = this.createDirectoryEntryElements(resp);
-	      	this.setState({staffMemberDirectoryEntries: staffMemberDirectoryEntries});
+					var staffMemberDirectoryEntries = this.createDirectoryEntryElements(resp)
+	      	this.setState({staffMemberDirectoryEntries: staffMemberDirectoryEntries})
 	    })
   	}
 
   	createDirectoryEntryElements(users){
-  		console.log(users, "users");
   		var directoryEntryElements = []
 		  users.forEach((user, index) => {
-  				directoryEntryElements.push(<DirectoryEntry key={index} handleClick={this.handleClick} user={user}/>);
+  				directoryEntryElements.push(<DirectoryEntry key={index} user={user}/>)
 			})
-		  console.log(directoryEntryElements);
-		return directoryEntryElements;
+		return directoryEntryElements
   }
 
-  	handleClick(target){
-  		console.log('handle click');
-  	}
+  	
 
 
 	render() {

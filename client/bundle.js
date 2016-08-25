@@ -64922,7 +64922,6 @@
 	    key: 'createPostElements',
 	    value: function createPostElements(posts) {
 	      var postElements = posts.map(function (post, index) {
-	        console.log(post.id, "post id");
 	        var attachments = post.get("Attachments") ? post.get("Attachments") : [];
 	        var postData = {
 	          author: post.get("Author"),
@@ -64940,7 +64939,6 @@
 	  }, {
 	    key: 'render',
 	    value: function render() {
-	      console.log(this.props.posts.length);
 	      var postElements = this.createPostElements(this.props.posts);
 	      return _react2.default.createElement(
 	        'div',
@@ -65072,7 +65070,7 @@
 	  }, {
 	    key: 'handlePostEntryAvatarClick',
 	    value: function handlePostEntryAvatarClick() {
-	      (0, _AnimationHelpers.showProfileModal)(this.props.postData);
+	      (0, _AnimationHelpers.showProfileModal)(this.props.postData.author);
 	    }
 	  }, {
 	    key: 'renderAttachmentSection',
@@ -89912,7 +89910,7 @@
 
 /***/ },
 /* 767 */
-/***/ function(module, exports) {
+/***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
@@ -89921,9 +89919,20 @@
 	});
 	exports.showProfileModal = showProfileModal;
 	exports.hideProfileModal = hideProfileModal;
-	function showProfileModal(postData) {
-		var author = postData.author;
-		var profilePicture = author.get('ProfilePicture');
+	
+	var _RenderHelpers = __webpack_require__(653);
+	
+	function showProfileModal(user) {
+		var author = user;
+	
+		var profilePictureFile = author.get('ProfilePicture');
+		var avatar;
+		if (profilePictureFile) {
+			avatar = profilePictureFile.url();
+		} else {
+			avatar = './Images/user.png';
+		}
+	
 		var name = author.get('name');
 		var phoneNumber = author.get('phonenumber');
 		var email = author.get('email');
@@ -89932,7 +89941,7 @@
 		var major = author.get('major');
 		var company = author.get('company');
 	
-		$('.ProfileModalImage').attr('src', profilePicture.url());
+		$('.ProfileModalImage').attr('src', avatar);
 		$('.ProfileModalInfoName').text(name);
 		$('.ProfileModalInfoPhone').text(phoneNumber);
 		$('.ProfileModalInfoEmail').text(email);
@@ -89946,7 +89955,6 @@
 	}
 	
 	function hideProfileModal() {
-		console.log('hide profile modal');
 		$('.ProfileModal').addClass('animateDown');
 		$('.ProfileModal').removeClass('animateUp');
 	}
@@ -90863,7 +90871,6 @@
 				staffMemberDirectoryEntries: ''
 			};
 			_this.createDirectoryEntryElements = _this.createDirectoryEntryElements.bind(_this);
-			_this.handleClick = _this.handleClick.bind(_this);
 			return _this;
 		}
 	
@@ -90892,20 +90899,11 @@
 		}, {
 			key: 'createDirectoryEntryElements',
 			value: function createDirectoryEntryElements(users) {
-				var _this3 = this;
-	
-				console.log(users, "users");
 				var directoryEntryElements = [];
 				users.forEach(function (user, index) {
-					directoryEntryElements.push(_react2.default.createElement(_DirectoryEntry2.default, { key: index, handleClick: _this3.handleClick, user: user }));
+					directoryEntryElements.push(_react2.default.createElement(_DirectoryEntry2.default, { key: index, user: user }));
 				});
-				console.log(directoryEntryElements);
 				return directoryEntryElements;
-			}
-		}, {
-			key: 'handleClick',
-			value: function handleClick(target) {
-				console.log('handle click');
 			}
 		}, {
 			key: 'render',
@@ -93670,6 +93668,8 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
+	var _AnimationHelpers = __webpack_require__(767);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -93699,6 +93699,12 @@
 		}
 	
 		_createClass(DirectoryEntry, [{
+			key: 'handleClick',
+			value: function handleClick() {
+				console.log(this.props.user, 'user');
+				(0, _AnimationHelpers.showProfileModal)(this.props.user);
+			}
+		}, {
 			key: 'refClick',
 			value: function refClick() {
 				this.props.handleClick(this.directoryEntry);
@@ -93747,9 +93753,8 @@
 							return _this2.directoryEntry = _ref;
 						},
 						className: 'DirectoryEntry',
-						onClick: function onClick() {
-							return _this2.refClick();
-						} },
+						onClick: this.handleClick.bind(this)
+					},
 					_react2.default.createElement(
 						'div',
 						{ className: 'DirectoryEntryCircle' },
